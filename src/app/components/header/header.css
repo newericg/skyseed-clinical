@@ -3,6 +3,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  margin: 0;
+  padding: 0;
 }
 
 /* ── PROMO BANNER ── */
@@ -30,7 +32,7 @@
 .site-header {
   background: transparent;
   transition: background 0.4s ease;
-  padding: 12px max(40px, calc(50vw - 640px));
+  padding: 0 max(40px, calc(50vw - 640px));
 }
 
 /* Normal (top) state: transparent full-width */
@@ -38,6 +40,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 12px 0;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

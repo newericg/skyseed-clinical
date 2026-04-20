@@ -33,16 +33,17 @@ body {
   background: var(--offwhite);
   color: var(--dark);
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 
 /* ── HERO ── */
 .hero {
-  min-height: 100vh;
+  min-height: calc(100dvh - 102px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0;
-  padding-top: 64px;
   overflow: hidden;
 }
 .hero-left {
