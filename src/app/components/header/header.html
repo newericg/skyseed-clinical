@@ -1,0 +1,18 @@
+<nav id="navbar" [style.boxShadow]="navBoxShadow">
+  <a href="#">
+    <img src="logo.png" alt="Skyseed Clinical" style="height: 40px; display: block;" class="nav-logo">
+  </a>
+  <ul class="nav-links" [class.open]="mobileMenuOpen">
+    <li><a (click)="mobileMenuOpen = false" href="#products">Products</a></li>
+    <li><a (click)="mobileMenuOpen = false" href="#science">Science</a></li>
+    <li><a (click)="mobileMenuOpen = false" href="#benefits">Benefits</a></li>
+    <li><a (click)="mobileMenuOpen = false" href="#learn">Learn</a></li>
+    <li><a (click)="mobileMenuOpen = false" href="#practitioners">Practitioners</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-nav">Shop Now</button>
+    <div class="hamburger" [class.open]="mobileMenuOpen" id="hamburger" (click)="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
