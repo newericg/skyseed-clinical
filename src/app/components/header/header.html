@@ -1,18 +1,118 @@
-<nav id="navbar" [style.boxShadow]="navBoxShadow">
-  <a href="#">
-    <img src="logo.png" alt="Skyseed Clinical" style="height: 40px; display: block;" class="nav-logo">
-  </a>
-  <ul class="nav-links" [class.open]="mobileMenuOpen">
-    <li><a (click)="mobileMenuOpen = false" href="#products">Products</a></li>
-    <li><a (click)="mobileMenuOpen = false" href="#science">Science</a></li>
-    <li><a (click)="mobileMenuOpen = false" href="#benefits">Benefits</a></li>
-    <li><a (click)="mobileMenuOpen = false" href="#learn">Learn</a></li>
-    <li><a (click)="mobileMenuOpen = false" href="#practitioners">Practitioners</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="btn-nav">Shop Now</button>
-    <div class="hamburger" [class.open]="mobileMenuOpen" id="hamburger" (click)="toggleMenu()">
-      <span></span><span></span><span></span>
+<!-- Promo Banner -->
+<div class="promo-banner" [class.hidden]="isScrolled">
+  <p>{{ lang === 'pt' ? 'O DS-01® é ideal para você? ➔' : 'Is DS-01® Daily Synbiotic Right For You? ➔' }}</p>
+</div>
+
+<header class="site-header" [class.scrolled]="isScrolled">
+  <div class="header-container">
+
+    <!-- LEFT PILL: Logo + Desktop Nav -->
+    <div class="header-pill header-pill-left">
+      <a href="#" class="header-logo">
+        <img src="logo.png" alt="Skyseed" class="logo-img">
+      </a>
+
+      <nav class="header-nav">
+        <ul class="nav-list">
+          <li class="nav-item has-dropdown">
+            <a href="#products">{{ lang === 'pt' ? 'Produtos' : 'Shop' }}</a>
+            <div class="mega-menu">
+              <div class="mega-menu-inner">
+                <a href="#products" class="mega-card">
+                  <div class="mega-img-box"><div class="mini-capsule"></div></div>
+                  <div class="mega-text">
+                    <span class="mega-badge">{{ lang === 'pt' ? 'Mais Vendido' : 'Best Seller' }}</span>
+                    <h4>DS-01® Daily Synbiotic</h4>
+                    <p>{{ lang === 'pt' ? 'Saúde do corpo inteiro' : 'Whole-body health' }}</p>
+                  </div>
+                </a>
+                <a href="#products" class="mega-card">
+                  <div class="mega-img-box"><div class="mini-capsule duo"></div></div>
+                  <div class="mega-text">
+                    <span class="mega-badge green">{{ lang === 'pt' ? 'Economize 25%' : 'Save 25%' }}</span>
+                    <h4>{{ lang === 'pt' ? 'Duo Essencial Diário' : 'Daily Essentials Duo' }}</h4>
+                    <p>{{ lang === 'pt' ? 'Sinbiótico + Multivitamínico' : 'Synbiotic + Multivitamin' }}</p>
+                  </div>
+                </a>
+                <a href="#products" class="mega-card">
+                  <div class="mega-img-box"><div class="mini-capsule pds"></div></div>
+                  <div class="mega-text">
+                    <h4>PDS-08™ {{ lang === 'pt' ? 'Pediátrico' : 'Pediatric' }}</h4>
+                    <p>{{ lang === 'pt' ? 'Para crianças a partir de 3 anos' : 'For children ages 3+' }}</p>
+                  </div>
+                </a>
+              </div>
+              <div class="mega-footer">
+                <a href="#products" class="shop-all">{{ lang === 'pt' ? 'Ver todos os produtos ➔' : 'Shop All Products ➔' }}</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item has-dropdown">
+            <a href="#science">{{ lang === 'pt' ? 'Ciência' : 'Science' }}</a>
+            <div class="mega-menu mega-menu-small">
+              <div class="mega-menu-inner">
+                <a href="#science" class="mega-link">{{ lang === 'pt' ? 'Sistema ViaCap®' : 'ViaCap® Delivery System' }}</a>
+                <a href="#science" class="mega-link">{{ lang === 'pt' ? 'Eficácia Clínica' : 'Clinical Efficacy' }}</a>
+                <a href="#benefits" class="mega-link">{{ lang === 'pt' ? 'Benefícios à Saúde' : 'Health Benefits' }}</a>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item"><a href="#learn">{{ lang === 'pt' ? 'Aprender' : 'Learn' }}</a></li>
+        </ul>
+      </nav>
     </div>
+
+    <!-- RIGHT PILL: Desktop only actions -->
+    <div class="header-pill header-pill-right desktop-only">
+      <button class="lang-flag" [class.active]="lang === 'pt'" (click)="setLang('pt')" title="Português">
+        <img src="https://flagcdn.com/w40/br.png" alt="BR" width="24" height="16">
+      </button>
+      <button class="lang-flag" [class.active]="lang === 'en'" (click)="setLang('en')" title="English">
+        <img src="https://flagcdn.com/w40/us.png" alt="US" width="24" height="16">
+      </button>
+      <a href="#products" class="btn-get-started">{{ lang === 'pt' ? 'Começar' : 'Get Started' }}</a>
+    </div>
+
+    <!-- Mobile: just the hamburger -->
+    <button class="hamburger mobile-only" [class.open]="mobileMenuOpen" (click)="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
   </div>
-</nav>
+</header>
+
+<!-- Mobile Full Screen Menu Overlay -->
+<div class="mobile-nav-overlay" [class.open]="mobileMenuOpen">
+  <!-- Close button top-right -->
+  <button class="overlay-close" (click)="toggleMenu()" aria-label="Fechar menu">
+    <span></span><span></span>
+  </button>
+
+  <div class="mobile-overlay-inner">
+    <!-- Nav links -->
+    <ul class="mobile-nav-list">
+      <li><a (click)="toggleMenu()" href="#products">{{ lang === 'pt' ? 'Produtos' : 'Shop Formulations' }}</a></li>
+      <li><a (click)="toggleMenu()" href="#science">{{ lang === 'pt' ? 'A Ciência' : 'The Science' }}</a></li>
+      <li><a (click)="toggleMenu()" href="#benefits">{{ lang === 'pt' ? 'Benefícios' : 'Benefits' }}</a></li>
+      <li><a (click)="toggleMenu()" href="#learn">{{ lang === 'pt' ? 'Aprender' : 'Learn' }}</a></li>
+    </ul>
+
+    <!-- Divider -->
+    <div class="mobile-divider"></div>
+
+    <!-- Language -->
+    <div class="mobile-lang-row">
+      <button class="lang-flag-mobile" [class.active]="lang === 'pt'" (click)="setLang('pt')">
+        <img src="https://flagcdn.com/w40/br.png" alt="BR" width="22" height="15"> Português
+      </button>
+      <button class="lang-flag-mobile" [class.active]="lang === 'en'" (click)="setLang('en')">
+        <img src="https://flagcdn.com/w40/us.png" alt="US" width="22" height="15"> English
+      </button>
+    </div>
+
+    <!-- CTA Button -->
+    <a href="#products" class="mobile-cta" (click)="toggleMenu()">
+      {{ lang === 'pt' ? 'Começar Agora' : 'Get Started' }}
+    </a>
+  </div>
+</div>

@@ -1,21 +1,31 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LanguageService, Lang } from '../../services/language.service';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class HeaderComponent {
-  navBoxShadow = 'none';
+  langService = inject(LanguageService);
+  isScrolled = false;
   mobileMenuOpen = false;
+
+  get lang() { return this.langService.lang(); }
+
+  setLang(l: Lang) {
+    this.langService.setLang(l);
+  }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    this.navBoxShadow = window.scrollY > 10 ? '0 2px 20px rgba(10,51,88,0.08)' : 'none';
+    this.isScrolled = window.scrollY > 40;
   }
 
   toggleMenu() {
     this.mobileMenuOpen = !this.mobileMenuOpen;
+    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
   }
 }
