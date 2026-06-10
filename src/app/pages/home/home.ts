@@ -6,7 +6,7 @@ import { LanguageService } from '../../services/language.service';
   selector: 'app-home',
   imports: [CommonModule],
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrl: './home.scss'
 })
 export class HomeComponent implements AfterViewInit {
   langService = inject(LanguageService);

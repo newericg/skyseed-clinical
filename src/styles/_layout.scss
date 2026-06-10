@@ -1,0 +1,12 @@
+$section-padding-block: 100px;
+$section-padding-inline: max(60px, calc(50vw - 640px));
+$section-padding-block-compact: 60px;
+$section-padding-inline-compact: 24px;
+
+@mixin section-padding {
+  padding: $section-padding-block $section-padding-inline;
+}
+
+@mixin section-padding-compact {
+  padding: $section-padding-block-compact $section-padding-inline-compact;
+}

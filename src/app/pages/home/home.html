@@ -1,42 +1,10 @@
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow">{{ t.heroEyebrow }}</p>
-    <h1 class="hero-h1">{{ t.heroH1a }}<br><em>{{ t.heroH1b }}</em></h1>
-    <p class="hero-sub">{{ t.heroSub }}</p>
-    <div class="hero-ctas">
-      <a href="#" class="btn-primary">{{ t.heroShop }}</a>
-      <a href="#science" class="btn-secondary">{{ t.heroScience }}</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <span class="stat-num">24</span>
-        <span class="stat-label">{{ t.statLabel1 }}</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">53.6B</span>
-        <span class="stat-label">{{ t.statLabel2 }}</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">3</span>
-        <span class="stat-label">{{ t.statLabel3 }}</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-visual">
-      <div class="hero-bg-text">DS-01</div>
-      <div class="hero-badge">
-        <strong>ViaCap® Technology</strong>
-        {{ lang === 'pt' ? 'Entrega cápsula-na-cápsula ao cólon' : 'Capsule-in-capsule delivery to the colon' }}
-      </div>
-      <div class="capsule-ring capsule-ring-2"></div>
-      <div class="capsule-ring"></div>
-      <div class="capsule-outer">
-        <div class="capsule-inner"></div>
-      </div>
-    </div>
-  </div>
+  <picture>
+    <source media="(min-width: 901px)" srcset="/assets/hero/hero-desktop.jpeg">
+    <img src="/assets/hero/hero-mobile.jpeg" class="hero-image" alt="Skyseed Hero Banner" fetchpriority="high" loading="eager">
+  </picture>
+  <a href="#" class="btn-primary hero-buy-btn">{{ t.heroShop }}</a>
 </section>
 
 <!-- MARQUEE -->
