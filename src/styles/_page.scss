@@ -1,0 +1,62 @@
+@use 'breakpoints' as bp;
+
+@mixin page-shell {
+  background: var(--offwhite);
+  min-height: 60vh;
+}
+
+@mixin page-inner {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(72px, 10vw, 120px) clamp(24px, 4vw, 48px) clamp(80px, 12vw, 140px);
+}
+
+@mixin page-hero {
+  margin-bottom: clamp(48px, 6vw, 72px);
+  max-width: 42em;
+}
+
+@mixin page-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4.2vw, 52px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--dark);
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+
+@mixin page-lead {
+  font-size: clamp(17px, 1.9vw, 21px);
+  line-height: 1.65;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+@mixin placeholder-card {
+  background: linear-gradient(135deg, rgba(10, 51, 88, 0.03), rgba(0, 94, 183, 0.06));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: clamp(48px, 8vw, 80px) clamp(32px, 5vw, 64px);
+  text-align: center;
+}
+
+@mixin placeholder-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto clamp(24px, 4vw, 32px);
+  border-radius: 50%;
+  background: rgba(247, 167, 15, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--accent);
+}
+
+@mixin page-inner-compact {
+  @include page-inner;
+  padding-top: 48px;
+  padding-bottom: 64px;
+}

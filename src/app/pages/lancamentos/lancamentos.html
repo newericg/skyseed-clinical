@@ -1,0 +1,27 @@
+<div class="lancamentos-page">
+  <div class="lancamentos-inner">
+    <header class="lancamentos-hero">
+      <p class="section-label">{{ t.label }}</p>
+      <h1 class="lancamentos-title">{{ t.title }}</h1>
+      <p class="lancamentos-lead">{{ t.lead }}</p>
+    </header>
+
+    @if (hasProducts) {
+      <div class="products-grid">
+        @for (product of products; track product.slug) {
+          <app-product-card [product]="product" [ctaLabel]="t.cta" />
+        }
+      </div>
+    } @else {
+      <div class="coming-soon">
+        <div class="coming-soon-icon" aria-hidden="true">✦</div>
+        <p class="coming-soon-subtitle">{{ t.subtitle }}</p>
+        <div class="coming-soon-visual" aria-hidden="true">
+          <div class="capsule-preview"></div>
+          <div class="capsule-preview alt"></div>
+          <div class="capsule-preview accent"></div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

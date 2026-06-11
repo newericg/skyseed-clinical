@@ -1,0 +1,48 @@
+<div class="onde-comprar-page">
+  <div class="onde-comprar-inner">
+    <header class="onde-comprar-hero">
+      <p class="section-label">{{ t.label }}</p>
+      <h1 class="onde-comprar-title">{{ t.title }}</h1>
+      <p class="onde-comprar-lead">{{ t.lead }}</p>
+    </header>
+
+    @if (hasChannels) {
+      @for (section of channelSections; track section.type) {
+        @if (channelsByType(section.type).length) {
+          <section class="channel-section">
+            <h2 class="channel-section-title">{{ t[section.titleKey] }}</h2>
+            <div class="channel-grid">
+              @for (channel of channelsByType(section.type); track channel.id) {
+                <a
+                  class="channel-card"
+                  [href]="channel.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @if (channel.logoUrl) {
+                    <img [src]="channel.logoUrl" [alt]="channel.name[lang]" class="channel-logo" />
+                  }
+                  <h3 class="channel-name">{{ channel.name[lang] }}</h3>
+                  @if (channel.description) {
+                    <p class="channel-desc">{{ channel.description[lang] }}</p>
+                  }
+                  <span class="channel-link">{{ t.visit }} →</span>
+                </a>
+              }
+            </div>
+          </section>
+        }
+      }
+    } @else {
+      <div class="coming-soon">
+        <div class="coming-soon-icon" aria-hidden="true">◎</div>
+        <p class="coming-soon-subtitle">{{ t.subtitle }}</p>
+        <div class="channel-placeholders" aria-hidden="true">
+          <div class="channel-placeholder"></div>
+          <div class="channel-placeholder"></div>
+          <div class="channel-placeholder"></div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

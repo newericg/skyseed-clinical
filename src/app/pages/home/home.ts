@@ -1,22 +1,33 @@
-import { Component, AfterViewInit, inject } from '@angular/core';
+import { Component, AfterViewInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
+import { SeoService } from '../../services/seo.service';
+import { BLOG_ARTICLES } from '../../data/blog-articles';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class HomeComponent implements AfterViewInit {
   langService = inject(LanguageService);
+  private seo = inject(SeoService);
+  private route = inject(ActivatedRoute);
+
+  articles = BLOG_ARTICLES;
 
   get lang() { return this.langService.lang(); }
+
+  private readonly syncSeo = effect(() => {
+    this.seo.setHomeMeta(this.langService.lang());
+  });
 
   get t() {
     const pt = this.lang === 'pt';
     return {
-      // Hero
+      // Hero — intocado
       heroEyebrow: 'DS-01® Daily Synbiotic',
       heroH1a: pt ? 'Saúde do corpo inteiro' : 'Whole body health',
       heroH1b: pt ? 'começa no intestino' : 'starts in the gut',
@@ -28,96 +39,149 @@ export class HomeComponent implements AfterViewInit {
       statLabel1: pt ? 'Cepas Probióticas' : 'Probiotic Strains',
       statLabel2: pt ? 'UFSa por dose' : 'AFU per dose',
       statLabel3: pt ? 'Ensaios Clínicos' : 'Clinical Trials',
-      // Marquee
-      m1: pt ? 'Estudado Clinicamente' : 'Clinically Studied',
-      m2: pt ? '24 Cepas Probióticas' : '24 Probiotic Strains',
-      m3: pt ? 'Sistema ViaCap®' : 'ViaCap® Delivery System',
-      m4: pt ? 'Sem Refrigeração' : 'No Refrigeration Required',
-      m5: pt ? 'Sem Alérgenos' : 'Allergen Free',
-      m6: pt ? 'Fórmula Vegetal' : 'Plant-Based Formula',
-      m7: pt ? 'Ensaios Clínicos Controlados' : 'Randomized Placebo-Controlled Trials',
+      // About
+      aboutLabel: pt ? 'Skyseed Clinical' : 'Skyseed Clinical',
+      aboutH2: pt ? 'Sobre Nós' : 'About Us',
+      aboutP1: pt
+        ? 'Na Skyseed Clinical, acreditamos que cuidar da saúde não deveria ser complicado. Por isso, desenvolvemos suplementos com foco no que realmente importa: qualidade, segurança e resultados consistentes para quem busca mais bem-estar no dia a dia.'
+        : 'At Skyseed Clinical, we believe taking care of your health should not be complicated. That is why we develop supplements focused on what truly matters: quality, safety, and consistent support for those seeking more well-being in daily life.',
+      aboutP2: pt
+        ? 'Cada fórmula é construída com critério, utilizando matérias-primas selecionadas e processos rigorosos de fabricação. Acreditamos que a confiança é conquistada nos detalhes, desde a escolha dos ingredientes até o cuidado presente em cada etapa da produção.'
+        : 'Every formula is built with care, using selected raw materials and rigorous manufacturing processes. We believe trust is earned in the details—from choosing ingredients to the care present at every stage of production.',
+      aboutP3: pt
+        ? 'Também acreditamos que evoluir faz parte do processo. Acompanhamos constantemente os avanços da ciência e da tecnologia para aprimorar nossas fórmulas e oferecer soluções alinhadas às necessidades da vida moderna.'
+        : 'We also believe that evolving is part of the process. We constantly follow advances in science and technology to improve our formulas and offer solutions aligned with the needs of modern life.',
+      aboutP4: pt
+        ? 'Mais do que criar suplementos, nosso objetivo é fazer parte da sua rotina de forma simples e transparente, ajudando você a construir hábitos que contribuam para uma vida com mais equilíbrio, disposição e qualidade. Porque uma vida melhor começa com escolhas melhores — e estamos aqui para fazer parte dessa jornada.'
+        : 'More than creating supplements, our goal is to be part of your routine in a simple and transparent way, helping you build habits that contribute to a life with more balance, energy, and quality. Because a better life starts with better choices—and we are here to be part of that journey.',
+      aboutImgAlt: pt
+        ? 'Mulher em ambiente acolhedor, representando bem-estar e rotina saudável'
+        : 'Woman in a welcoming environment, representing well-being and a healthy routine',
+      aboutPillar1: pt ? 'Qualidade' : 'Quality',
+      aboutPillar2: pt ? 'Confiança' : 'Trust',
+      aboutPillar3: pt ? 'Evolução' : 'Evolution',
+      aboutPillar4: pt ? 'Bem-Estar' : 'Well-Being',
       // Products
-      productsLabel: pt ? 'Nossas Formulações' : 'Our Formulations',
-      productsH2: pt ? 'Essenciais diários para nutrição e saúde digestiva' : 'Daily essentials for nutrition and digestive health',
+      productsLabel: pt ? 'Nossos Suplementos' : 'Our Supplements',
+      productsH2: pt
+        ? 'Suplementação pensada para o bem-estar do dia a dia'
+        : 'Supplementation designed for everyday well-being',
       productsDesc: pt
-        ? 'Sinbióticos e multivitamínicos formulados com precisão, projetados para trabalhar com sua biologia, apoiados por pesquisas científicas rigorosas.'
-        : 'Precision-formulated synbiotics and multivitamins designed to work with your biology, backed by rigorous scientific research.',
-      p1name: 'DS-01® Daily Synbiotic',
-      p1desc: pt ? '24 cepas probióticas + prebiótico para saúde do corpo inteiro. Validado clinicamente para reduzir inchaço, gases e irregularidade.*' : '24 probiotic strains + prebiotic for whole-body health. Clinically validated to reduce bloating, gas, and irregularity.*',
-      p1price: pt ? 'A partir de R$249/mês' : 'From $49.99 / month',
-      p2name: pt ? 'Duo Essencial Diário' : 'Daily Essentials Duo',
-      p2desc: pt ? 'DS-01® combinado com nosso multivitamínico diário para cobrir lacunas nutricionais e promover regularidade saudável.' : 'DS-01® paired with our daily multivitamin to cover nutrient gaps and promote healthy regularity.',
-      p2price: pt ? 'A partir de R$399/mês' : 'From $79.99 / month',
-      p3name: pt ? 'PDS-08™ Sinbiótico Pediátrico' : 'PDS-08™ Pediatric Synbiotic',
-      p3desc: pt ? 'Formulado para crianças a partir de 3 anos, apoiando imunidade intestinal, digestão saudável e desenvolvimento do microbioma.*' : 'Formulated for children 3+, supporting gut immunity, healthy digestion, and microbiome development.*',
-      p3price: pt ? 'A partir de R$199/mês' : 'From $39.99 / month',
-      shopNow: pt ? 'Comprar Agora' : 'Shop Now',
+        ? 'Na Skyseed Clinical, acreditamos que cuidar da saúde não deveria ser complicado. Desenvolvemos fórmulas com foco no que realmente importa: qualidade, segurança e resultados consistentes para quem busca mais equilíbrio na rotina.'
+        : 'At Skyseed Clinical, we believe taking care of your health should not be complicated. We develop formulas focused on what truly matters: quality, safety, and consistent support for those seeking more balance in daily life.',
+      p1name: pt ? 'Suplemento de Magnésio' : 'Magnesium Supplement',
+      p1desc: pt
+        ? 'Mineral essencial que participa de centenas de reações no organismo e pode apoiar equilíbrio muscular, nervoso e sensação de disposição no dia a dia.'
+        : 'An essential mineral involved in hundreds of body reactions that may support muscular and nervous balance and daily energy.',
+      p1price: pt ? 'Consulte disponibilidade' : 'Check availability',
+      p2name: pt ? 'Apoio ao Sono e Relaxamento' : 'Sleep and Relaxation Support',
+      p2desc: pt
+        ? 'Fórmula desenvolvida para integrar hábitos de descanso, contribuindo para uma rotina noturna mais tranquila e consistente.'
+        : 'A formula developed to integrate rest habits, contributing to a calmer and more consistent nighttime routine.',
+      p2price: pt ? 'Consulte disponibilidade' : 'Check availability',
+      p3name: pt ? 'Equilíbrio Digestivo' : 'Digestive Balance',
+      p3desc: pt
+        ? 'Suplementação voltada ao bem-estar intestinal, pensada para quem busca apoiar o equilíbrio do microbioma como parte de uma rotina saudável.'
+        : 'Supplementation focused on intestinal well-being, designed for those seeking to support microbiome balance as part of a healthy routine.',
+      p3price: pt ? 'Consulte disponibilidade' : 'Check availability',
+      shopNow: pt ? 'Saiba Mais' : 'Learn More',
       // Science glass
-      sgEyebrow: '• VIACAP® TECHNOLOGY',
-      sgTitle: pt ? 'A maioria dos probióticos não sobrevive à digestão — DS-01® sobrevive.' : "Most probiotics don't survive digestion—DS-01® does.",
-      sgStatText: pt ? 'Aumenta bactérias saudáveis' : 'Increases healthy bacteria',
-      outerCapsule: pt ? 'CÁPSULA EXTERNA' : 'OUTER CAPSULE',
-      outerCapsuleDesc: pt ? 'Protege os probióticos do ácido estomacal no trato digestivo, enquanto fornece prebióticos para estimular o crescimento de bactérias benéficas.' : 'Shields probiotics from stomach acid in the digestive tract, while delivering prebiotics to stimulate the growth of beneficial bacteria.',
-      innerCapsule: pt ? 'CÁPSULA INTERNA' : 'INNER CAPSULE',
-      innerCapsuleDesc: pt ? 'Entrega 24 cepas vivas de probióticos ao cólon, onde são mais necessárias.' : "Delivers 24 live strains of probiotics to the colon, where they're needed most.",
+      sgEyebrow: pt ? '• NOSSA ABORDAGEM' : '• OUR APPROACH',
+      sgTitle: pt
+        ? 'Cada fórmula é construída com critério, do ingrediente à produção.'
+        : 'Every formula is built with care, from ingredient to production.',
+      sgStatText: pt
+        ? 'Acreditamos que a confiança é conquistada nos detalhes — desde a escolha das matérias-primas até o cuidado em cada etapa da fabricação.'
+        : 'We believe trust is earned in the details—from selecting raw materials to care at every stage of manufacturing.',
+      outerCapsule: pt ? 'SELEÇÃO DE INGREDIENTES' : 'INGREDIENT SELECTION',
+      outerCapsuleDesc: pt
+        ? 'Utilizamos matérias-primas selecionadas, priorizando qualidade e origem em cada componente das nossas fórmulas.'
+        : 'We use selected raw materials, prioritizing quality and origin in every component of our formulas.',
+      innerCapsule: pt ? 'PROCESSOS DE FABRICAÇÃO' : 'MANUFACTURING PROCESSES',
+      innerCapsuleDesc: pt
+        ? 'Processos rigorosos de fabricação garantem consistência e segurança em cada lote produzido.'
+        : 'Rigorous manufacturing processes ensure consistency and safety in every batch produced.',
       // Benefits
-      benefitsLabel: pt ? 'Benefícios à Saúde' : 'Health Benefits',
-      benefitsH2a: pt ? 'Benefícios dentro e' : 'Benefits in and',
-      benefitsH2b: pt ? 'além do intestino' : 'beyond the gut',
-      tab1: pt ? 'Saúde Digestiva' : 'Digestive Health',
-      tab1body: pt ? 'Reduz inchaço, gases e irregularidade em adultos saudáveis. O DS-01® foi validado no maior ensaio clínico de probióticos avaliando inchaço.*' : 'Reduces bloating, gas, and irregularity in healthy adults. DS-01® has been validated in the largest probiotic clinical trial evaluating bloating.*',
-      tab2: pt ? 'Imunidade Intestinal' : 'Gut Immunity',
-      tab2body: pt ? 'Fortalece a barreira intestinal, reforça a imunidade gastrointestinal e apoia um sistema imunológico saudável.*' : 'Fortifies the gut barrier, reinforces gastrointestinal immunity, and supports a healthy immune system from within.*',
-      tab3: pt ? 'Saúde Dermatológica' : 'Dermatological Health',
-      tab3body: pt ? 'Reforça o eixo intestino-pele, apoiando a saúde da pele, luminosidade e reduzindo a ocorrência de certas condições de pele.*' : 'Reinforces the gut-skin axis supporting skin health, radiance, and reducing the occurrence of certain skin conditions.*',
-      tab4: pt ? 'Saúde Cardiovascular' : 'Cardiovascular Health',
-      tab4body: pt ? 'Cepas probióticas específicas do DS-01® são clinicamente estudadas para promover função cardiovascular saudável e equilíbrio do colesterol.*' : 'Specific probiotic strains in DS-01® are clinically studied to promote healthy cardiovascular function and cholesterol balance.*',
-      tab5: pt ? 'Síntese de Micronutrientes' : 'Micronutrient Synthesis',
-      tab5body: pt ? 'Promove a biossíntese de micronutrientes essenciais, incluindo folato, vitamina B12 e ácidos graxos de cadeia curta.*' : 'Promotes the biosynthesis of key micronutrients including folate, vitamin B12, and short-chain fatty acids.*',
-      clinicalOutcomes: pt ? 'Resultados Clínicos' : 'Clinical Outcomes',
-      bar1: pt ? 'Redução de Inchaço' : 'Bloating Reduction',
-      bar2: pt ? 'Melhora de Gases' : 'Gas Improvement',
-      bar3: pt ? 'Suporte à Regularidade' : 'Regularity Support',
+      benefitsLabel: pt ? 'Nosso Compromisso' : 'Our Commitment',
+      benefitsH2a: pt ? 'Bem-estar com' : 'Well-being with',
+      benefitsH2b: pt ? 'transparência e critério' : 'transparency and care',
+      tab1: pt ? 'Qualidade e Segurança' : 'Quality and Safety',
+      tab1body: pt
+        ? 'Desenvolvemos suplementos com foco no que realmente importa: qualidade, segurança e resultados consistentes para quem busca mais bem-estar no dia a dia.'
+        : 'We develop supplements focused on what truly matters: quality, safety, and consistent support for those seeking more well-being in daily life.',
+      tab2: pt ? 'Processos de Fabricação' : 'Manufacturing Processes',
+      tab2body: pt
+        ? 'Cada fórmula passa por processos rigorosos de fabricação. Acreditamos que a confiança é conquistada nos detalhes, em cada etapa da produção.'
+        : 'Every formula goes through rigorous manufacturing processes. We believe trust is earned in the details, at every stage of production.',
+      tab3: pt ? 'Ciência em Evolução' : 'Evolving Science',
+      tab3body: pt
+        ? 'Acompanhamos constantemente os avanços da ciência e da tecnologia para aprimorar nossas fórmulas e oferecer soluções alinhadas às necessidades da vida moderna.'
+        : 'We constantly follow advances in science and technology to improve our formulas and offer solutions aligned with the needs of modern life.',
+      tab4: pt ? 'Rotina Simples e Transparente' : 'Simple and Transparent Routine',
+      tab4body: pt
+        ? 'Mais do que criar suplementos, nosso objetivo é fazer parte da sua rotina de forma simples e transparente, ajudando você a construir hábitos saudáveis.'
+        : 'More than creating supplements, our goal is to be part of your routine in a simple and transparent way, helping you build healthy habits.',
+      tab5: pt ? 'Equilíbrio e Qualidade de Vida' : 'Balance and Quality of Life',
+      tab5body: pt
+        ? 'Estamos aqui para fazer parte da sua jornada rumo a uma vida com mais equilíbrio, disposição e qualidade — porque uma vida melhor começa com escolhas melhores.'
+        : 'We are here to be part of your journey toward a life with more balance, energy, and quality—because a better life starts with better choices.',
+      clinicalOutcomes: pt ? 'Nossos Compromissos' : 'Our Commitments',
+      bar1: pt ? 'Seleção de Ingredientes' : 'Ingredient Selection',
+      bar2: pt ? 'Cuidado na Produção' : 'Production Care',
+      bar3: pt ? 'Acompanhamento Científico' : 'Scientific Monitoring',
       disclaimer: pt
         ? '*Estas afirmações não foram avaliadas pela ANVISA. Este produto não se destina a diagnosticar, tratar, curar ou prevenir qualquer doença.'
         : '*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.',
+      // Learn / Blog
+      learnLabel: pt ? 'Conteúdo Educativo' : 'Educational Content',
+      learnH2: pt ? 'Conteúdo para o seu bem-estar' : 'Content for your well-being',
+      learnDesc: pt
+        ? 'Artigos sobre suplementação, hábitos saudáveis e qualidade de vida para apoiar suas escolhas no dia a dia.'
+        : 'Articles on supplementation, healthy habits, and quality of life to support your daily choices.',
+      readArticle: pt ? 'Ler artigo' : 'Read article',
+      viewAllBlog: pt ? 'Ver todos os artigos →' : 'View all articles →',
       // Testimonials
-      testiLabel: pt ? 'O Que as Pessoas Estão Dizendo' : 'What People Are Saying',
-      testiH2a: pt ? 'Mais de 1 milhão de' : 'Over 1 million',
-      testiH2b: pt ? 'assinantes no mundo' : 'subscribers worldwide',
+      testiLabel: pt ? 'Na Rotina de Quem Confia' : 'In the Routine of Those Who Trust',
+      testiH2a: pt ? 'Suplementação que se' : 'Supplementation that',
+      testiH2b: pt ? 'integra ao dia a dia' : 'fits into daily life',
       testi1: pt
-        ? '"Experimentei inúmeros probióticos ao longo dos anos. Nada fez a diferença que a Skyseed fez. Minha digestão se transformou completamente em dois meses."'
-        : '"I\'ve tried countless probiotics over the years. Nothing has made the difference that Skyseed has. My digestion has completely transformed in two months."',
-      testi1author: pt ? 'Sarah M. — Assinante Verificada' : 'Sarah M. — Verified Subscriber',
+        ? '"Gosto da simplicidade de incluir o suplemento na minha rotina. A embalagem é clara e o processo é descomplicado."'
+        : '"I like how simple it is to include the supplement in my routine. The packaging is clear and the process is straightforward."',
+      testi1author: pt ? 'A. M. — Cliente' : 'A. M. — Customer',
       testi2: pt
-        ? '"Como gastroenterologista, fico impressionado com o rigor clínico por trás do DS-01®. Eu o recomendo a pacientes que buscam suporte probiótico baseado em evidências."'
-        : '"As a gastroenterologist, I\'m impressed by the clinical rigor behind DS-01®. I recommend it to patients looking for evidence-based probiotic support."',
-      testi2author: pt ? 'Dr. James K. — Gastroenterologista' : 'Dr. James K. — Gastroenterologist',
+        ? '"A transparência sobre os ingredientes me passou confiança desde o primeiro contato com a marca."'
+        : '"Transparency about the ingredients gave me confidence from my first contact with the brand."',
+      testi2author: pt ? 'R. S. — Cliente' : 'R. S. — Customer',
       testi3: pt
-        ? '"O inchaço com que eu vivia há anos praticamente desapareceu. Não esperava que algo funcionasse tão bem, mas aqui estamos. Genuinamente transformador."'
-        : '"The bloating I\'d lived with for years is basically gone. I didn\'t expect something to work this well, but here we are. Genuinely life-changing."',
-      testi3author: pt ? 'Priya L. — Assinante Verificada' : 'Priya L. — Verified Subscriber',
+        ? '"Busco hábitos consistentes e a Skyseed Clinical se encaixa bem nessa proposta de cuidado contínuo."'
+        : '"I look for consistent habits and Skyseed Clinical fits well with this idea of ongoing care."',
+      testi3author: pt ? 'C. L. — Cliente' : 'C. L. — Customer',
       testi4: pt
-        ? '"Adoro que não precisa de refrigeração e a embalagem é linda. Mas o mais importante — meu intestino está melhor do que nos últimos anos."'
-        : '"I love that it doesn\'t need refrigeration and the packaging is beautiful. But most importantly — my gut feels better than it has in years."',
-      testi4author: pt ? 'Marcus T. — Assinante Verificado' : 'Marcus T. — Verified Subscriber',
+        ? '"Aprecio o tom educativo da marca. Sinto que as informações são apresentadas de forma honesta e acessível."'
+        : '"I appreciate the brand\'s educational tone. I feel the information is presented honestly and accessibly."',
+      testi4author: pt ? 'M. T. — Cliente' : 'M. T. — Customer',
       testi5: pt
-        ? '"A ciência por trás da Skyseed foi o que me convenceu. Saber que passou por ensaios clínicos reais me dá uma confiança que outros suplementos simplesmente não têm."'
-        : '"The science behind Skyseed is what sold me. Knowing it\'s been through actual clinical trials gives me confidence that other supplements simply don\'t."',
-      testi5author: pt ? 'Elena R. — Assinante Verificada' : 'Elena R. — Verified Subscriber',
-      // Press
-      pressLabel: pt ? 'Destaque na Mídia' : 'As Featured In',
+        ? '"Para mim, o mais importante é a facilidade de manter a suplementação como parte natural da rotina."'
+        : '"For me, the most important thing is how easy it is to keep supplementation as a natural part of my routine."',
+      testi5author: pt ? 'J. F. — Cliente' : 'J. F. — Customer',
+      // Press → Pilares
+      pressLabel: pt ? 'Nossos Pilares' : 'Our Pillars',
+      press1: pt ? 'Qualidade' : 'Quality',
+      press2: pt ? 'Segurança' : 'Safety',
+      press3: pt ? 'Transparência' : 'Transparency',
+      press4: pt ? 'Ciência' : 'Science',
+      press5: pt ? 'Bem-estar' : 'Well-Being',
+      press6: pt ? 'Confiança' : 'Trust',
       // CTA
       ctaLabel: pt ? 'Comece Hoje' : 'Start Today',
       ctaH2: pt
-        ? 'Seu corpo não é só seu — ele abriga 38 trilhões de micróbios'
-        : "Your body isn't yours alone — it's home to 38 trillion microbes",
-      ctaBtn: pt ? 'Adquira DS-01® Agora' : 'Get DS-01® Now',
+        ? 'Uma vida melhor começa com escolhas melhores'
+        : 'A better life starts with better choices',
+      ctaBtn: pt ? 'Conheça Nossos Suplementos' : 'Discover Our Supplements',
     };
   }
 
   ngAfterViewInit() {
-    // Scroll reveal
     const fadeEls = document.querySelectorAll('.fade-up');
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
@@ -126,50 +190,33 @@ export class HomeComponent implements AfterViewInit {
       fadeEls.forEach(el => observer.observe(el));
     }
 
-    // Tabs logic
     const tabs = document.querySelectorAll('.tab-item');
-    const bars = [
-      document.getElementById('b1'),
-      document.getElementById('b2'),
-      document.getElementById('b3')
-    ];
-    const barVals = [
-      document.getElementById('b1v'),
-      document.getElementById('b2v'),
-      document.getElementById('b3v')
-    ];
-
-    const updateBars = (values: number[]) => {
-      bars.forEach((bar, i) => {
-        if (!bar) return;
-        bar.style.width = '0';
-        bar.style.transition = 'none';
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            bar.style.transition = 'width 1.2s cubic-bezier(.4,0,.2,1)';
-            bar.style.width = values[i] + '%';
-            if (barVals[i]) barVals[i]!.textContent = values[i] + '%';
-          });
-        });
-      });
-    };
-
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        const dataBars = (tab as HTMLElement).dataset['bars'];
-        if (dataBars) updateBars(JSON.parse(dataBars));
       });
     });
 
-    // Testimonial scroll
     const scroll = document.getElementById('testiScroll');
     const scrollLeftBtn = document.getElementById('scrollLeft');
     const scrollRightBtn = document.getElementById('scrollRight');
     if (scrollLeftBtn && scroll) scrollLeftBtn.addEventListener('click', () => scroll.scrollBy({ left: -344, behavior: 'smooth' }));
     if (scrollRightBtn && scroll) scrollRightBtn.addEventListener('click', () => scroll.scrollBy({ left: 344, behavior: 'smooth' }));
 
-    setTimeout(() => updateBars([85, 72, 68]), 800);
+    const scrollIfFragment = (fragment: string | null) => {
+      if (!fragment) return;
+      requestAnimationFrame(() => this.scrollToFragment(fragment));
+    };
+
+    scrollIfFragment(this.route.snapshot.fragment);
+    this.route.fragment.subscribe(scrollIfFragment);
+  }
+
+  private scrollToFragment(fragment: string) {
+    const el = document.getElementById(fragment);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

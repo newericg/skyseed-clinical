@@ -7,59 +7,76 @@
   <a href="#" class="btn-primary hero-buy-btn">{{ t.heroShop }}</a>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-strip">
-  <div class="marquee-inner">
-    <span class="marquee-item">{{ t.m1 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m2 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m3 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m4 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m5 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m6 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m7 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m1 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m2 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m3 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m4 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m5 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m6 }} <span class="marquee-sep">·</span></span>
-    <span class="marquee-item">{{ t.m7 }} <span class="marquee-sep">·</span></span>
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-bg" aria-hidden="true">
+    <div class="about-bg-gradient"></div>
+    <div class="about-bg-grid"></div>
+    <div class="about-bg-orb about-bg-orb--1"></div>
+    <div class="about-bg-orb about-bg-orb--2"></div>
   </div>
-</div>
 
-<!-- PRODUCTS -->
-<section class="product-section" id="products">
-  <div class="product-header">
-    <div class="product-header-left">
-      <p class="section-label">{{ t.productsLabel }}</p>
-      <h2 class="section-h2">{{ t.productsH2 }}</h2>
+  <div class="about-container">
+    <div class="about-layout fade-up">
+      <div class="about-text">
+        <p class="section-label">{{ t.aboutLabel }}</p>
+        <h1 class="section-h2 about-title">{{ t.aboutH2 }}</h1>
+        <div class="about-body">
+          <p class="about-p">{{ t.aboutP1 }}</p>
+          <p class="about-p">{{ t.aboutP2 }}</p>
+          <p class="about-p">{{ t.aboutP3 }}</p>
+          <p class="about-p">{{ t.aboutP4 }}</p>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="about-blob-bg" aria-hidden="true"></div>
+        <div class="about-blob-img">
+          <img
+            src="/assets/about/about-us.jpeg"
+            [alt]="t.aboutImgAlt"
+            loading="lazy"
+            width="560"
+            height="640"
+          />
+        </div>
+      </div>
     </div>
-    <p class="product-header-right">{{ t.productsDesc }}</p>
-  </div>
-  <div class="product-grid">
-    <div class="product-card fade-up">
-      <p class="product-num">01 / 03</p>
-      <div class="product-icon gold">🌿</div>
-      <h3 class="product-name">{{ t.p1name }}</h3>
-      <p class="product-desc">{{ t.p1desc }}</p>
-      <p class="product-price">{{ t.p1price }}</p>
-      <a href="#" class="product-cta">{{ t.shopNow }}</a>
-    </div>
-    <div class="product-card fade-up">
-      <p class="product-num">02 / 03</p>
-      <div class="product-icon dark">✦</div>
-      <h3 class="product-name">{{ t.p2name }}</h3>
-      <p class="product-desc">{{ t.p2desc }}</p>
-      <p class="product-price">{{ t.p2price }}</p>
-      <a href="#" class="product-cta">{{ t.shopNow }}</a>
-    </div>
-    <div class="product-card fade-up">
-      <p class="product-num">03 / 03</p>
-      <div class="product-icon green">🧬</div>
-      <h3 class="product-name">{{ t.p3name }}</h3>
-      <p class="product-desc">{{ t.p3desc }}</p>
-      <p class="product-price">{{ t.p3price }}</p>
-      <a href="#" class="product-cta">{{ t.shopNow }}</a>
+
+    <div class="about-pillars">
+      <div class="about-pillar fade-up">
+        <div class="about-pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21.2 8 14 2 9.4h7.6L12 2z"/>
+          </svg>
+        </div>
+        <span class="about-pillar-label">{{ t.aboutPillar1 }}</span>
+      </div>
+      <div class="about-pillar fade-up">
+        <div class="about-pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <span class="about-pillar-label">{{ t.aboutPillar2 }}</span>
+      </div>
+      <div class="about-pillar fade-up">
+        <div class="about-pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 17l6-6 4 4 8-8"/>
+            <path d="M14 7h7v7"/>
+          </svg>
+        </div>
+        <span class="about-pillar-label">{{ t.aboutPillar3 }}</span>
+      </div>
+      <div class="about-pillar fade-up">
+        <div class="about-pillar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <span class="about-pillar-label">{{ t.aboutPillar4 }}</span>
+      </div>
     </div>
   </div>
 </section>
@@ -72,13 +89,9 @@
       <h2 class="sg-title">{{ t.sgTitle }}</h2>
       <div class="sg-stat-box">
         <div class="sg-stat-text">
-          <span class="sg-badge">DS-01®</span> {{ t.sgStatText }}<br>bacteriaº
-        </div>
-        <div class="sg-stat-val">
-          <span class="sg-arrow">↑</span> 17x
+          {{ t.sgStatText }}
         </div>
       </div>
-      <p class="sg-footnote">ºLactobacillus spp.</p>
     </div>
     <div class="sg-right">
       <div class="sg-capsule-col">
@@ -110,35 +123,35 @@
   </div>
   <div class="benefits-layout">
     <div class="benefit-tabs" id="tabs">
-      <div class="tab-item active" data-bars="[85,72,68]">
+      <div class="tab-item active">
         <div class="tab-header">
           <span class="tab-title">{{ t.tab1 }}</span>
           <span class="tab-icon">+</span>
         </div>
         <div class="tab-body">{{ t.tab1body }}</div>
       </div>
-      <div class="tab-item" data-bars="[78,65,90]">
+      <div class="tab-item">
         <div class="tab-header">
           <span class="tab-title">{{ t.tab2 }}</span>
           <span class="tab-icon">+</span>
         </div>
         <div class="tab-body">{{ t.tab2body }}</div>
       </div>
-      <div class="tab-item" data-bars="[60,88,74]">
+      <div class="tab-item">
         <div class="tab-header">
           <span class="tab-title">{{ t.tab3 }}</span>
           <span class="tab-icon">+</span>
         </div>
         <div class="tab-body">{{ t.tab3body }}</div>
       </div>
-      <div class="tab-item" data-bars="[70,55,92]">
+      <div class="tab-item">
         <div class="tab-header">
           <span class="tab-title">{{ t.tab4 }}</span>
           <span class="tab-icon">+</span>
         </div>
         <div class="tab-body">{{ t.tab4body }}</div>
       </div>
-      <div class="tab-item" data-bars="[82,76,65]">
+      <div class="tab-item">
         <div class="tab-header">
           <span class="tab-title">{{ t.tab5 }}</span>
           <span class="tab-icon">+</span>
@@ -149,19 +162,58 @@
     <div class="benefits-right">
       <p class="benefit-visual-title">{{ t.clinicalOutcomes }}</p>
       <div class="benefit-bar-row">
-        <div class="bar-label"><span>{{ t.bar1 }}</span><span id="b1v">85%</span></div>
-        <div class="bar-track"><div class="bar-fill" id="b1" style="width:85%"></div></div>
+        <div class="bar-label"><span>{{ t.bar1 }}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
       </div>
       <div class="benefit-bar-row">
-        <div class="bar-label"><span>{{ t.bar2 }}</span><span id="b2v">72%</span></div>
-        <div class="bar-track"><div class="bar-fill" id="b2" style="width:72%"></div></div>
+        <div class="bar-label"><span>{{ t.bar2 }}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
       </div>
       <div class="benefit-bar-row">
-        <div class="bar-label"><span>{{ t.bar3 }}</span><span id="b3v">68%</span></div>
-        <div class="bar-track"><div class="bar-fill" id="b3" style="width:68%"></div></div>
+        <div class="bar-label"><span>{{ t.bar3 }}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
       </div>
       <p class="benefit-disclaimer">{{ t.disclaimer }}</p>
     </div>
+  </div>
+</section>
+
+<!-- LEARN / BLOG -->
+<section class="product-section" id="learn">
+  <div class="product-header">
+    <div class="product-header-left">
+      <p class="section-label">{{ t.learnLabel }}</p>
+      <h2 class="section-h2">{{ t.learnH2 }}</h2>
+    </div>
+    <div class="product-header-right">
+      <p>{{ t.learnDesc }}</p>
+      <a routerLink="/blog" class="blog-view-all">{{ t.viewAllBlog }}</a>
+    </div>
+  </div>
+  <div class="product-grid">
+    @for (article of articles; track article.slug; let i = $index) {
+      <a [routerLink]="['/blog', article.slug]" class="product-card blog-card fade-up">
+        <div class="blog-card-media">
+          <picture>
+            <source media="(min-width: 901px)" [attr.srcset]="article.coverImage.web">
+            <img
+              [src]="article.coverImage.mobile"
+              [alt]="article.coverImage.alt[lang]"
+              loading="lazy"
+              width="640"
+              height="360"
+            />
+          </picture>
+          <div class="blog-card-overlay" aria-hidden="true"></div>
+        </div>
+        <div class="blog-card-content">
+          <p class="product-num">{{ (i + 1).toString().padStart(2, '0') }} / 03</p>
+          <h3 class="product-name">{{ article.title[lang] }}</h3>
+          <p class="product-desc">{{ article.excerpt[lang] }}</p>
+          <span class="product-cta">{{ t.readArticle }}</span>
+        </div>
+      </a>
+    }
   </div>
 </section>
 
@@ -210,12 +262,12 @@
 <section class="press-section">
   <p class="press-label">{{ t.pressLabel }}</p>
   <div class="press-logos">
-    <span class="press-logo">The New York Times</span>
-    <span class="press-logo">Vogue</span>
-    <span class="press-logo">Forbes</span>
-    <span class="press-logo">TIME</span>
-    <span class="press-logo">The Guardian</span>
-    <span class="press-logo">Fast Company</span>
+    <span class="press-logo">{{ t.press1 }}</span>
+    <span class="press-logo">{{ t.press2 }}</span>
+    <span class="press-logo">{{ t.press3 }}</span>
+    <span class="press-logo">{{ t.press4 }}</span>
+    <span class="press-logo">{{ t.press5 }}</span>
+    <span class="press-logo">{{ t.press6 }}</span>
   </div>
 </section>
 
@@ -225,5 +277,5 @@
     <p class="section-label">{{ t.ctaLabel }}</p>
     <h2 class="section-h2">{{ t.ctaH2 }}</h2>
   </div>
-  <a href="#" class="btn-light">{{ t.ctaBtn }}</a>
+  <a href="#benefits" class="btn-light">{{ t.ctaBtn }}</a>
 </div>

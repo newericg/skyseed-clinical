@@ -1,0 +1,91 @@
+<div class="contato-page">
+  <div class="contato-inner">
+    <header class="contato-hero">
+      <p class="section-label">{{ t.label }}</p>
+      <h1 class="contato-title">{{ t.title }}</h1>
+      <p class="contato-lead">{{ t.lead }}</p>
+    </header>
+
+    <div class="contato-layout">
+      <form class="contato-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        @if (submitted()) {
+          <div class="form-success" role="status">{{ t.success }}</div>
+        }
+        @if (error()) {
+          <div class="form-error" role="alert">{{ t.error }}</div>
+        }
+
+        <div class="form-field">
+          <label for="name">{{ t.name }}</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            autocomplete="name"
+            [class.invalid]="form.controls.name.touched && form.controls.name.invalid"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">{{ t.email }}</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              autocomplete="email"
+              [class.invalid]="form.controls.email.touched && form.controls.email.invalid"
+            />
+          </div>
+          <div class="form-field">
+            <label for="phone">{{ t.phone }} <span class="optional">{{ t.optional }}</span></label>
+            <input
+              id="phone"
+              type="tel"
+              formControlName="phone"
+              autocomplete="tel"
+            />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="message">{{ t.message }}</label>
+          <textarea
+            id="message"
+            formControlName="message"
+            rows="6"
+            [class.invalid]="form.controls.message.touched && form.controls.message.invalid"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="sending()">
+          {{ sending() ? t.sending : t.submit }}
+        </button>
+      </form>
+
+      <aside class="contato-info">
+        <h2 class="info-title">{{ t.contactInfo }}</h2>
+
+        <div class="info-block">
+          <p class="info-label">{{ t.whatsapp }}</p>
+          <p class="info-value muted">{{ t.whatsappSoon }}</p>
+        </div>
+
+        <div class="info-block">
+          <p class="info-label">{{ t.emailLabel }}</p>
+          <a class="info-value link" [href]="'mailto:' + t.emailValue">{{ t.emailValue }}</a>
+        </div>
+
+        <div class="info-block">
+          <p class="info-label">{{ t.social }}</p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="X (Twitter)">𝕏</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶</a>
+            <a href="#" class="social-link" aria-label="Instagram">◉</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>

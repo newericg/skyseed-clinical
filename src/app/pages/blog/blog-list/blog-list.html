@@ -1,0 +1,39 @@
+<div class="blog-page">
+  <div class="blog-inner">
+    <header class="blog-hero">
+      <p class="section-label">{{ t.label }}</p>
+      <h1 class="blog-title">{{ t.title }}</h1>
+      <p class="blog-lead">{{ t.lead }}</p>
+    </header>
+
+    <div class="blog-grid">
+      @for (article of articles; track article.slug; let i = $index) {
+        <app-blog-card
+          [article]="article"
+          [index]="(currentPage - 1) * pageSize + i"
+          [readLabel]="t.readArticle"
+        />
+      }
+    </div>
+
+    @if (showPagination) {
+      <nav class="blog-pagination" [attr.aria-label]="t.page">
+        @if (currentPage > 1) {
+          <a
+            class="pagination-btn"
+            [routerLink]="['/blog']"
+            [queryParams]="{ page: currentPage - 1 }"
+          >{{ t.prev }}</a>
+        }
+        <span class="pagination-info">{{ t.page }} {{ currentPage }} / {{ totalPages }}</span>
+        @if (currentPage < totalPages) {
+          <a
+            class="pagination-btn"
+            [routerLink]="['/blog']"
+            [queryParams]="{ page: currentPage + 1 }"
+          >{{ t.next }}</a>
+        }
+      </nav>
+    }
+  </div>
+</div>

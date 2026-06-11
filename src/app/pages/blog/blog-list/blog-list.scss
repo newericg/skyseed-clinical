@@ -1,0 +1,76 @@
+@use 'styles/breakpoints' as bp;
+@use 'styles/page' as page;
+
+.blog-page {
+  @include page.page-shell;
+}
+
+.blog-inner {
+  @include page.page-inner;
+}
+
+.blog-hero {
+  @include page.page-hero;
+}
+
+.blog-title {
+  @include page.page-title;
+}
+
+.blog-lead {
+  @include page.page-lead;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: clamp(48px, 6vw, 64px);
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.pagination-btn {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark);
+  text-decoration: none;
+  padding: 12px 24px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover {
+    background: rgba(10, 51, 88, 0.04);
+    border-color: var(--dark);
+  }
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@include bp.tablet-down {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include bp.desktop-up {
+  @media (max-width: 1100px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<a [routerLink]="['/blog', article.slug]" class="blog-card">
+  <div class="blog-card-media">
+    <picture>
+      <source media="(min-width: 901px)" [attr.srcset]="article.coverImage.web">
+      <img
+        [src]="article.coverImage.mobile"
+        [alt]="article.coverImage.alt[lang]"
+        loading="lazy"
+        width="640"
+        height="360"
+      />
+    </picture>
+    <div class="blog-card-overlay" aria-hidden="true"></div>
+  </div>
+  <div class="blog-card-content">
+    @if (index !== undefined) {
+      <p class="blog-card-index">{{ (index + 1).toString().padStart(2, '0') }}</p>
+    }
+    <time class="blog-card-date" [attr.datetime]="article.publishedAt">
+      {{ formatDate(article.publishedAt) }}
+    </time>
+    <h3 class="blog-card-title">{{ article.title[lang] }}</h3>
+    <p class="blog-card-excerpt">{{ article.excerpt[lang] }}</p>
+    <span class="blog-card-cta">{{ readLabel }}</span>
+  </div>
+</a>

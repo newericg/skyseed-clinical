@@ -1,0 +1,46 @@
+@if (article) {
+  <article class="article-page">
+    <div class="article-inner">
+      <a routerLink="/blog" class="article-back">{{ t.back }}</a>
+
+      <header class="article-header">
+        <p class="section-label">Skyseed Clinical</p>
+        <h1 class="article-title">{{ article.title[lang] }}</h1>
+        <p class="article-excerpt">{{ article.excerpt[lang] }}</p>
+      </header>
+
+      <figure class="article-feature">
+        <picture>
+          <source media="(min-width: 901px)" [attr.srcset]="article.coverImage.web">
+          <img
+            [src]="article.coverImage.mobile"
+            [alt]="article.coverImage.alt[lang]"
+            fetchpriority="high"
+            width="960"
+            height="540"
+          />
+        </picture>
+      </figure>
+
+      <div class="article-body">
+        @for (section of article.sections[lang]; track section.heading) {
+          <section class="article-section">
+            @if (section.heading) {
+              <h2 class="article-heading">{{ section.heading }}</h2>
+            }
+            @for (para of section.paragraphs; track para) {
+              <p class="article-paragraph">{{ para }}</p>
+            }
+          </section>
+        }
+      </div>
+    </div>
+  </article>
+} @else {
+  <div class="article-page">
+    <div class="article-inner">
+      <h1 class="article-title">{{ t.notFound }}</h1>
+      <a routerLink="/" class="article-back">{{ t.home }}</a>
+    </div>
+  </div>
+}

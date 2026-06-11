@@ -1,0 +1,22 @@
+<article class="product-card">
+  <div class="product-card-media">
+    <picture>
+      <source media="(min-width: 901px)" [attr.srcset]="product.image.web">
+      <img
+        [src]="product.image.mobile"
+        [alt]="product.image.alt[lang]"
+        loading="lazy"
+        width="480"
+        height="560"
+      />
+    </picture>
+    @if (product.badge) {
+      <span class="product-card-badge">{{ product.badge[lang] }}</span>
+    }
+  </div>
+  <div class="product-card-body">
+    <h3 class="product-card-name">{{ product.name[lang] }}</h3>
+    <p class="product-card-desc">{{ product.description[lang] }}</p>
+    <span class="product-card-cta">{{ ctaLabel }}</span>
+  </div>
+</article>
