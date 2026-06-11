@@ -1,0 +1,58 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.81,
+    "values": [
+      0.81
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:49217/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.83,
+    "values": [
+      0.83
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:49217/blog/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.78,
+    "values": [
+      0.78
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:49217/blog/magnesio-equilibrio-organismo/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.85,
+    "actual": 0.82,
+    "values": [
+      0.82
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:49217/onde-comprar/"
+  }
+]

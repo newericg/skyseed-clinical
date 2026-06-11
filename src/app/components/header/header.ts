@@ -1,5 +1,13 @@
-import { Component, HostListener, inject, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  PLATFORM_ID,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { LanguageService, Lang } from '../../services/language.service';
@@ -13,18 +21,23 @@ export interface NavItem {
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class HeaderComponent implements OnDestroy {
   langService = inject(LanguageService);
   private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
+
+  @ViewChild('mobileNav') mobileNavRef?: ElementRef<HTMLElement>;
+  @ViewChild('hamburgerBtn') hamburgerRef?: ElementRef<HTMLButtonElement>;
 
   isScrolled = false;
   mobileMenuOpen = false;
   currentUrl = '';
   currentFragment = '';
+  private scrollTicking = false;
 
   readonly navItems: NavItem[] = [
     { id: 'about', label: { pt: 'Sobre Nós', en: 'About Us' }, route: '/', fragment: 'about' },
@@ -35,6 +48,7 @@ export class HeaderComponent implements OnDestroy {
   ];
 
   private routerSub: Subscription;
+  private previousFocus: HTMLElement | null = null;
 
   constructor() {
     this.syncRouteState();
@@ -47,24 +61,66 @@ export class HeaderComponent implements OnDestroy {
     return this.langService.lang();
   }
 
+  get menuLabel() {
+    return this.lang === 'pt' ? 'Menu' : 'Menu';
+  }
+
+  get closeMenuLabel() {
+    return this.lang === 'pt' ? 'Fechar menu' : 'Close menu';
+  }
+
   setLang(l: Lang) {
     this.langService.setLang(l);
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    this.isScrolled = window.scrollY > 40;
+    if (this.scrollTicking) return;
+    this.scrollTicking = true;
+    requestAnimationFrame(() => {
+      this.isScrolled = window.scrollY > 40;
+      this.scrollTicking = false;
+    });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.mobileMenuOpen) {
+      this.toggleMenu();
+    }
   }
 
   toggleMenu() {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
-    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
+    if (this.mobileMenuOpen) {
+      this.closeMenu();
+      return;
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.previousFocus = document.activeElement as HTMLElement;
+      document.body.style.overflow = 'hidden';
+    }
+    this.mobileMenuOpen = true;
+
+    if (isPlatformBrowser(this.platformId)) {
+      requestAnimationFrame(() => {
+        const firstLink = this.mobileNavRef?.nativeElement.querySelector<HTMLElement>(
+          'a, button',
+        );
+        firstLink?.focus();
+      });
+    }
   }
 
   closeMenu() {
-    if (this.mobileMenuOpen) {
-      this.toggleMenu();
+    if (!this.mobileMenuOpen) return;
+
+    this.mobileMenuOpen = false;
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+      this.previousFocus?.focus();
     }
+    this.previousFocus = null;
   }
 
   isActive(item: NavItem): boolean {
@@ -79,7 +135,9 @@ export class HeaderComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.routerSub.unsubscribe();
-    document.body.style.overflow = '';
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+    }
   }
 
   private syncRouteState() {

@@ -1,0 +1,39 @@
+@use 'styles/page';
+
+.not-found-page {
+  @include page.page-shell;
+}
+
+.not-found-inner {
+  @include page.page-inner;
+  text-align: center;
+  padding-block: 80px;
+}
+
+.not-found-title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.not-found-message {
+  color: var(--muted);
+  margin-bottom: 32px;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.not-found-link {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--green);
+  color: var(--offwhite);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+}

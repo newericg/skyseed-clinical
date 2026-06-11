@@ -1,24 +1,25 @@
 import { Component, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { BLOG_ARTICLES, BLOG_PAGE_SIZE } from '../../../data/blog-articles';
+import { BLOG_ARTICLES_META, BLOG_PAGE_SIZE } from '../../../data/blog-articles-meta';
 import { BlogCardComponent } from '../../../components/blog-card/blog-card';
 import { LanguageService } from '../../../services/language.service';
 import { SeoService } from '../../../services/seo.service';
+import { StructuredDataService } from '../../../services/structured-data.service';
 
 @Component({
   selector: 'app-blog-list',
-  imports: [CommonModule, RouterLink, BlogCardComponent],
+  imports: [RouterLink, BlogCardComponent],
   templateUrl: './blog-list.html',
   styleUrl: './blog-list.scss',
 })
 export class BlogListComponent {
   private seo = inject(SeoService);
+  private structuredData = inject(StructuredDataService);
   private route = inject(ActivatedRoute);
   langService = inject(LanguageService);
 
   readonly pageSize = BLOG_PAGE_SIZE;
-  allArticles = [...BLOG_ARTICLES].sort(
+  allArticles = [...BLOG_ARTICLES_META].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 
@@ -42,7 +43,19 @@ export class BlogListComponent {
   }
 
   private readonly syncSeo = effect(() => {
-    this.seo.setBlogListMeta(this.langService.lang());
+    const lang = this.langService.lang();
+    this.seo.setBlogListMeta(lang);
+    const homeLabel = lang === 'pt' ? 'Início' : 'Home';
+    const blogLabel = 'Blog';
+    this.structuredData.setSchemas([
+      this.structuredData.getOrganizationSchema(),
+      this.structuredData.getWebSiteSchema(),
+      this.structuredData.getBlogSchema(this.allArticles),
+      this.structuredData.getBreadcrumbSchema([
+        { name: homeLabel, path: '/' },
+        { name: blogLabel, path: '/blog' },
+      ]),
+    ]);
   });
 
   constructor() {
@@ -63,6 +76,7 @@ export class BlogListComponent {
       readArticle: pt ? 'Ler artigo' : 'Read article',
       prev: pt ? 'Anterior' : 'Previous',
       next: pt ? 'Próxima' : 'Next',
+      pagination: pt ? 'Paginação do blog' : 'Blog pagination',
       page: pt ? 'Página' : 'Page',
     };
   }

@@ -12,6 +12,40 @@
   padding: clamp(72px, 10vw, 120px) clamp(24px, 4vw, 48px) clamp(80px, 12vw, 140px);
 }
 
+.article-breadcrumb {
+  margin-bottom: 20px;
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  li:not(:last-child)::after {
+    content: '›';
+    margin-left: 8px;
+    color: var(--muted);
+  }
+
+  a {
+    color: var(--green);
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+  }
+
+  li[aria-current='page'] {
+    color: var(--dark);
+  }
+}
+
 .article-back {
   display: inline-flex;
   align-items: center;
@@ -20,9 +54,14 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--green);
   text-decoration: none;
   margin-bottom: clamp(32px, 5vw, 48px);
+
+  &:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
 
   &::before {
     content: '←';

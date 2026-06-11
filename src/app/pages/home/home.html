@@ -1,10 +1,13 @@
 <!-- HERO -->
 <section class="hero">
+  <h1 class="sr-only">{{ t.heroH1a }} {{ t.heroH1b }}</h1>
   <picture>
+    <source media="(min-width: 901px)" srcset="/assets/hero/hero-desktop.webp" type="image/webp">
     <source media="(min-width: 901px)" srcset="/assets/hero/hero-desktop.jpeg">
-    <img src="/assets/hero/hero-mobile.jpeg" class="hero-image" alt="Skyseed Hero Banner" fetchpriority="high" loading="eager">
+    <source srcset="/assets/hero/hero-mobile.webp" type="image/webp">
+    <img src="/assets/hero/hero-mobile.jpeg" class="hero-image" alt="" fetchpriority="high" loading="eager" width="1920" height="1080">
   </picture>
-  <a href="#" class="btn-primary hero-buy-btn">{{ t.heroShop }}</a>
+  <a routerLink="/onde-comprar" class="btn-primary hero-buy-btn">{{ t.heroShop }}</a>
 </section>
 
 <!-- ABOUT -->
@@ -20,7 +23,7 @@
     <div class="about-layout fade-up">
       <div class="about-text">
         <p class="section-label">{{ t.aboutLabel }}</p>
-        <h1 class="section-h2 about-title">{{ t.aboutH2 }}</h1>
+        <h2 class="section-h2 about-title">{{ t.aboutH2 }}</h2>
         <div class="about-body">
           <p class="about-p">{{ t.aboutP1 }}</p>
           <p class="about-p">{{ t.aboutP2 }}</p>
@@ -31,13 +34,16 @@
       <div class="about-visual">
         <div class="about-blob-bg" aria-hidden="true"></div>
         <div class="about-blob-img">
-          <img
-            src="/assets/about/about-us.jpeg"
-            [alt]="t.aboutImgAlt"
-            loading="lazy"
-            width="560"
-            height="640"
-          />
+          <picture>
+            <source srcset="/assets/about/about-us.webp" type="image/webp">
+            <img
+              src="/assets/about/about-us.jpeg"
+              [alt]="t.aboutImgAlt"
+              loading="lazy"
+              width="560"
+              height="640"
+            />
+          </picture>
         </div>
       </div>
     </div>
@@ -45,7 +51,7 @@
     <div class="about-pillars">
       <div class="about-pillar fade-up">
         <div class="about-pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7L12 16.8 5.7 21.2 8 14 2 9.4h7.6L12 2z"/>
           </svg>
         </div>
@@ -53,7 +59,7 @@
       </div>
       <div class="about-pillar fade-up">
         <div class="about-pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <path d="M9 12l2 2 4-4"/>
           </svg>
@@ -62,7 +68,7 @@
       </div>
       <div class="about-pillar fade-up">
         <div class="about-pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 17l6-6 4 4 8-8"/>
             <path d="M14 7h7v7"/>
           </svg>
@@ -71,7 +77,7 @@
       </div>
       <div class="about-pillar fade-up">
         <div class="about-pillar-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
         </div>
@@ -122,42 +128,26 @@
     </div>
   </div>
   <div class="benefits-layout">
-    <div class="benefit-tabs" id="tabs">
-      <div class="tab-item active">
-        <div class="tab-header">
-          <span class="tab-title">{{ t.tab1 }}</span>
-          <span class="tab-icon">+</span>
+    <div class="benefit-tabs" role="tablist" [attr.aria-label]="lang === 'pt' ? 'Compromissos da marca' : 'Brand commitments'">
+      @for (tab of benefitTabs; track tab.id; let i = $index) {
+        <div
+          class="tab-item"
+          [class.active]="activeTab === i"
+          role="tab"
+          [id]="'benefit-tab-' + i"
+          [attr.aria-selected]="activeTab === i"
+          [attr.aria-controls]="'benefit-panel-' + i"
+          [attr.tabindex]="activeTab === i ? 0 : -1"
+          (click)="selectTab(i)"
+          (keydown)="onTabKeydown($event, i)"
+        >
+          <div class="tab-header">
+            <span class="tab-title">{{ tab.title }}</span>
+            <span class="tab-icon" aria-hidden="true">+</span>
+          </div>
+          <div class="tab-body" [id]="'benefit-panel-' + i" role="tabpanel" [attr.aria-labelledby]="'benefit-tab-' + i">{{ tab.body }}</div>
         </div>
-        <div class="tab-body">{{ t.tab1body }}</div>
-      </div>
-      <div class="tab-item">
-        <div class="tab-header">
-          <span class="tab-title">{{ t.tab2 }}</span>
-          <span class="tab-icon">+</span>
-        </div>
-        <div class="tab-body">{{ t.tab2body }}</div>
-      </div>
-      <div class="tab-item">
-        <div class="tab-header">
-          <span class="tab-title">{{ t.tab3 }}</span>
-          <span class="tab-icon">+</span>
-        </div>
-        <div class="tab-body">{{ t.tab3body }}</div>
-      </div>
-      <div class="tab-item">
-        <div class="tab-header">
-          <span class="tab-title">{{ t.tab4 }}</span>
-          <span class="tab-icon">+</span>
-        </div>
-        <div class="tab-body">{{ t.tab4body }}</div>
-      </div>
-      <div class="tab-item">
-        <div class="tab-header">
-          <span class="tab-title">{{ t.tab5 }}</span>
-          <span class="tab-icon">+</span>
-        </div>
-        <div class="tab-body">{{ t.tab5body }}</div>
-      </div>
+      }
     </div>
     <div class="benefits-right">
       <p class="benefit-visual-title">{{ t.clinicalOutcomes }}</p>
@@ -195,10 +185,12 @@
       <a [routerLink]="['/blog', article.slug]" class="product-card blog-card fade-up">
         <div class="blog-card-media">
           <picture>
+            <source media="(min-width: 901px)" [attr.srcset]="article.coverImage.web.replace('.jpeg', '.webp')" type="image/webp">
             <source media="(min-width: 901px)" [attr.srcset]="article.coverImage.web">
+            <source [attr.srcset]="article.coverImage.mobile.replace('.jpeg', '.webp')" type="image/webp">
             <img
               [src]="article.coverImage.mobile"
-              [alt]="article.coverImage.alt[lang]"
+              alt=""
               loading="lazy"
               width="640"
               height="360"
@@ -225,33 +217,33 @@
       <h2 class="section-h2">{{ t.testiH2a }}<br>{{ t.testiH2b }}</h2>
     </div>
     <div class="testi-scroll-btns">
-      <button class="scroll-btn" id="scrollLeft">←</button>
-      <button class="scroll-btn" id="scrollRight">→</button>
+      <button type="button" class="scroll-btn" id="scrollLeft" [attr.aria-label]="t.scrollLeft">←</button>
+      <button type="button" class="scroll-btn" id="scrollRight" [attr.aria-label]="t.scrollRight">→</button>
     </div>
   </div>
   <div class="testi-scroll" id="testiScroll">
     <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-stars" [attr.aria-label]="t.fiveStars">★★★★★</div>
       <p class="testi-quote">{{ t.testi1 }}</p>
       <p class="testi-author">{{ t.testi1author }}</p>
     </div>
     <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-stars" [attr.aria-label]="t.fiveStars">★★★★★</div>
       <p class="testi-quote">{{ t.testi2 }}</p>
       <p class="testi-author">{{ t.testi2author }}</p>
     </div>
     <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-stars" [attr.aria-label]="t.fiveStars">★★★★★</div>
       <p class="testi-quote">{{ t.testi3 }}</p>
       <p class="testi-author">{{ t.testi3author }}</p>
     </div>
     <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-stars" [attr.aria-label]="t.fiveStars">★★★★★</div>
       <p class="testi-quote">{{ t.testi4 }}</p>
       <p class="testi-author">{{ t.testi4author }}</p>
     </div>
     <div class="testi-card">
-      <div class="testi-stars">★★★★★</div>
+      <div class="testi-stars" [attr.aria-label]="t.fiveStars">★★★★★</div>
       <p class="testi-quote">{{ t.testi5 }}</p>
       <p class="testi-author">{{ t.testi5author }}</p>
     </div>

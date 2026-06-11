@@ -1,18 +1,19 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactService } from '../../services/contact.service';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
+import { StructuredDataService } from '../../services/structured-data.service';
 
 @Component({
   selector: 'app-contato',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './contato.html',
   styleUrl: './contato.scss',
 })
 export class ContatoComponent {
   private seo = inject(SeoService);
+  private structuredData = inject(StructuredDataService);
   private fb = inject(FormBuilder);
   private contact = inject(ContactService);
   langService = inject(LanguageService);
@@ -33,7 +34,18 @@ export class ContatoComponent {
   }
 
   private readonly syncSeo = effect(() => {
-    this.seo.setContatoMeta(this.langService.lang());
+    const lang = this.langService.lang();
+    this.seo.setContatoMeta(lang);
+    const homeLabel = lang === 'pt' ? 'Início' : 'Home';
+    const contactLabel = lang === 'pt' ? 'Fale Conosco' : 'Contact Us';
+    this.structuredData.setSchemas([
+      this.structuredData.getOrganizationSchema(),
+      this.structuredData.getWebSiteSchema(),
+      this.structuredData.getBreadcrumbSchema([
+        { name: homeLabel, path: '/' },
+        { name: contactLabel, path: '/contato' },
+      ]),
+    ]);
   });
 
   get t() {
@@ -63,7 +75,18 @@ export class ContatoComponent {
       social: pt ? 'Redes sociais' : 'Social media',
       whatsappSoon: pt ? 'Em breve' : 'Coming soon',
       emailValue: 'contato@skyseed.com.br',
+      nameError: pt ? 'Informe seu nome com pelo menos 2 caracteres.' : 'Enter your name with at least 2 characters.',
+      emailError: pt ? 'Informe um e-mail válido.' : 'Enter a valid email address.',
+      messageError: pt ? 'Informe uma mensagem com pelo menos 10 caracteres.' : 'Enter a message with at least 10 characters.',
     };
+  }
+
+  fieldError(controlName: 'name' | 'email' | 'message'): string | null {
+    const control = this.form.controls[controlName];
+    if (!control.touched || !control.invalid) return null;
+    if (controlName === 'name') return this.t.nameError;
+    if (controlName === 'email') return this.t.emailError;
+    return this.t.messageError;
   }
 
   onSubmit() {

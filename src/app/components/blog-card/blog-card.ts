@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BlogArticle } from '../../data/blog-articles';
+import { BlogArticleMeta } from '../../data/blog-articles-meta';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { LanguageService } from '../../services/language.service';
   styleUrl: './blog-card.scss',
 })
 export class BlogCardComponent {
-  @Input({ required: true }) article!: BlogArticle;
+  @Input({ required: true }) article!: BlogArticleMeta;
   @Input() index?: number;
   @Input() readLabel = 'Ler artigo';
 
@@ -18,6 +18,14 @@ export class BlogCardComponent {
 
   get lang() {
     return this.langService.lang();
+  }
+
+  get webpWeb() {
+    return this.article.coverImage.web.replace('.jpeg', '.webp');
+  }
+
+  get webpMobile() {
+    return this.article.coverImage.mobile.replace('.jpeg', '.webp');
   }
 
   formatDate(isoDate: string): string {

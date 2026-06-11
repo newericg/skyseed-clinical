@@ -20,13 +20,13 @@
                   rel="noopener noreferrer"
                 >
                   @if (channel.logoUrl) {
-                    <img [src]="channel.logoUrl" [alt]="channel.name[lang]" class="channel-logo" />
+                    <img [src]="channel.logoUrl" [alt]="channel.name[lang]" class="channel-logo" loading="lazy" width="120" height="48" />
                   }
                   <h3 class="channel-name">{{ channel.name[lang] }}</h3>
                   @if (channel.description) {
                     <p class="channel-desc">{{ channel.description[lang] }}</p>
                   }
-                  <span class="channel-link">{{ t.visit }} →</span>
+                  <span class="channel-link">{{ t.visit }} →<span class="sr-only"> {{ t.opensNewTab }}</span></span>
                 </a>
               }
             </div>

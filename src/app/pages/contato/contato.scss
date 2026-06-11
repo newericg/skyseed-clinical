@@ -109,8 +109,19 @@
   }
 }
 
+.field-error {
+  font-size: 13px;
+  color: #a33;
+  margin-top: 6px;
+}
+
 .btn-submit {
   align-self: flex-start;
+
+  &:focus-visible {
+    outline: 2px solid var(--dark);
+    outline-offset: 2px;
+  }
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.12em;

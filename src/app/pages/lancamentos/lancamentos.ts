@@ -1,18 +1,19 @@
 import { Component, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PRODUCTS } from '../../data/products';
 import { ProductCardComponent } from '../../components/product-card/product-card';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
+import { StructuredDataService } from '../../services/structured-data.service';
 
 @Component({
   selector: 'app-lancamentos',
-  imports: [CommonModule, ProductCardComponent],
+  imports: [ProductCardComponent],
   templateUrl: './lancamentos.html',
   styleUrl: './lancamentos.scss',
 })
 export class LancamentosComponent {
   private seo = inject(SeoService);
+  private structuredData = inject(StructuredDataService);
   langService = inject(LanguageService);
 
   products = PRODUCTS;
@@ -26,7 +27,18 @@ export class LancamentosComponent {
   }
 
   private readonly syncSeo = effect(() => {
-    this.seo.setLancamentosMeta(this.langService.lang());
+    const lang = this.langService.lang();
+    this.seo.setLancamentosMeta(lang);
+    const homeLabel = lang === 'pt' ? 'Início' : 'Home';
+    const pageLabel = lang === 'pt' ? 'Lançamentos' : 'Launches';
+    this.structuredData.setSchemas([
+      this.structuredData.getOrganizationSchema(),
+      this.structuredData.getWebSiteSchema(),
+      this.structuredData.getBreadcrumbSchema([
+        { name: homeLabel, path: '/' },
+        { name: pageLabel, path: '/lancamentos' },
+      ]),
+    ]);
   });
 
   get t() {

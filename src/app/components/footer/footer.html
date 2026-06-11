@@ -1,44 +1,44 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <a href="#" style="display: block; margin-bottom: 24px;">
-        <img src="logo-negativo.png" alt="Skyseed Clinical" style="height: 60px;" class="nav-logo">
+      <a routerLink="/" class="footer-logo-link" [attr.aria-label]="lang === 'pt' ? 'Skyseed Clinical — Página inicial' : 'Skyseed Clinical — Home'">
+        <img src="logo-negativo.png" alt="" width="1892" height="1179" class="nav-logo">
       </a>
       <p>{{ t.blurb }}</p>
-      <div class="footer-social">
-        <a href="#" class="social-link">𝕏</a>
-        <a href="#" class="social-link">in</a>
-        <a href="#" class="social-link">▶</a>
-        <a href="#" class="social-link">◉</a>
+      <div class="footer-social" [attr.aria-label]="lang === 'pt' ? 'Redes sociais' : 'Social media'">
+        <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="X (Twitter)">𝕏</span>
+        <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="LinkedIn">in</span>
+        <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="YouTube">▶</span>
+        <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="Instagram">◉</span>
       </div>
     </div>
     <div class="footer-col">
       <p class="footer-col-title">{{ t.products }}</p>
-      <a href="#benefits">{{ lang === 'pt' ? 'Suplemento de Magnésio' : 'Magnesium Supplement' }}</a>
-      <a href="#benefits">{{ lang === 'pt' ? 'Apoio ao Sono' : 'Sleep Support' }}</a>
-      <a href="#benefits">{{ lang === 'pt' ? 'Equilíbrio Digestivo' : 'Digestive Balance' }}</a>
-      <a href="#benefits">{{ lang === 'pt' ? 'Todos os Produtos' : 'All Products' }}</a>
+      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Suplemento de Magnésio' : 'Magnesium Supplement' }}</a>
+      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Apoio ao Sono' : 'Sleep Support' }}</a>
+      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Equilíbrio Digestivo' : 'Digestive Balance' }}</a>
+      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Todos os Produtos' : 'All Products' }}</a>
     </div>
     <div class="footer-col">
       <p class="footer-col-title">{{ t.science }}</p>
-      <a href="#science">{{ t.approach }}</a>
-      <a href="#science">{{ t.production }}</a>
-      <a href="#benefits">{{ t.benefits }}</a>
-      <a href="#learn">{{ t.learn }}</a>
+      <a routerLink="/" fragment="science">{{ t.approach }}</a>
+      <a routerLink="/" fragment="science">{{ t.production }}</a>
+      <a routerLink="/" fragment="benefits">{{ t.benefits }}</a>
+      <a routerLink="/" fragment="learn">{{ t.learn }}</a>
     </div>
     <div class="footer-col">
       <p class="footer-col-title">{{ t.company }}</p>
-      <a href="#about">{{ t.about }}</a>
-      <a href="#">{{ t.contact }}</a>
+      <a routerLink="/" fragment="about">{{ t.about }}</a>
+      <a routerLink="/contato">{{ t.contact }}</a>
     </div>
   </div>
   <div class="footer-bottom">
     <p class="footer-copy">{{ t.copy }}</p>
-    <div class="footer-legal">
-      <a href="#">{{ t.privacy }}</a>
-      <a href="#">{{ t.terms }}</a>
-      <a href="#">{{ t.accessibility }}</a>
-      <a href="#">{{ t.disclaimer }}</a>
+    <div class="footer-legal" role="list">
+      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.privacy }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
+      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.terms }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
+      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.accessibility }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
+      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.disclaimer }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
     </div>
   </div>
 </footer>

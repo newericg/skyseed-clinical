@@ -1,16 +1,36 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home';
-import { BlogListComponent } from './pages/blog/blog-list/blog-list';
-import { ArticleComponent } from './pages/blog/article/article';
-import { LancamentosComponent } from './pages/lancamentos/lancamentos';
-import { OndeComprarComponent } from './pages/onde-comprar/onde-comprar';
-import { ContatoComponent } from './pages/contato/contato';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'lancamentos', component: LancamentosComponent },
-  { path: 'blog', component: BlogListComponent },
-  { path: 'blog/:slug', component: ArticleComponent },
-  { path: 'onde-comprar', component: OndeComprarComponent },
-  { path: 'contato', component: ContatoComponent },
+  {
+    path: '',
+    loadComponent: () => import('./pages/home/home').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'lancamentos',
+    loadComponent: () =>
+      import('./pages/lancamentos/lancamentos').then((m) => m.LancamentosComponent),
+  },
+  {
+    path: 'blog',
+    loadComponent: () =>
+      import('./pages/blog/blog-list/blog-list').then((m) => m.BlogListComponent),
+  },
+  {
+    path: 'blog/:slug',
+    loadComponent: () =>
+      import('./pages/blog/article/article').then((m) => m.ArticleComponent),
+  },
+  {
+    path: 'onde-comprar',
+    loadComponent: () =>
+      import('./pages/onde-comprar/onde-comprar').then((m) => m.OndeComprarComponent),
+  },
+  {
+    path: 'contato',
+    loadComponent: () => import('./pages/contato/contato').then((m) => m.ContatoComponent),
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFoundComponent),
+  },
 ];

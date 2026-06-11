@@ -1,17 +1,18 @@
 import { Component, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PURCHASE_CHANNELS, PurchaseChannelType } from '../../data/purchase-channels';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
+import { StructuredDataService } from '../../services/structured-data.service';
 
 @Component({
   selector: 'app-onde-comprar',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './onde-comprar.html',
   styleUrl: './onde-comprar.scss',
 })
 export class OndeComprarComponent {
   private seo = inject(SeoService);
+  private structuredData = inject(StructuredDataService);
   langService = inject(LanguageService);
 
   channels = PURCHASE_CHANNELS;
@@ -36,7 +37,18 @@ export class OndeComprarComponent {
   }
 
   private readonly syncSeo = effect(() => {
-    this.seo.setOndeComprarMeta(this.langService.lang());
+    const lang = this.langService.lang();
+    this.seo.setOndeComprarMeta(lang);
+    const homeLabel = lang === 'pt' ? 'Início' : 'Home';
+    const pageLabel = lang === 'pt' ? 'Onde Comprar' : 'Where to Buy';
+    this.structuredData.setSchemas([
+      this.structuredData.getOrganizationSchema(),
+      this.structuredData.getWebSiteSchema(),
+      this.structuredData.getBreadcrumbSchema([
+        { name: homeLabel, path: '/' },
+        { name: pageLabel, path: '/onde-comprar' },
+      ]),
+    ]);
   });
 
   get t() {
@@ -55,6 +67,7 @@ export class OndeComprarComponent {
       distributors: pt ? 'Distribuidores' : 'Distributors',
       direct: pt ? 'Compra Direta' : 'Direct Purchase',
       visit: pt ? 'Visitar' : 'Visit',
+      opensNewTab: pt ? '(abre em nova aba)' : '(opens in new tab)',
     };
   }
 }

@@ -1,33 +1,54 @@
-import { Component, AfterViewInit, effect, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, PLATFORM_ID, effect, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
-import { BLOG_ARTICLES } from '../../data/blog-articles';
-
+import { StructuredDataService } from '../../services/structured-data.service';
+import { BLOG_ARTICLES_META } from '../../data/blog-articles-meta';
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
 })
 export class HomeComponent implements AfterViewInit {
   langService = inject(LanguageService);
   private seo = inject(SeoService);
+  private structuredData = inject(StructuredDataService);
   private route = inject(ActivatedRoute);
+  private platformId = inject(PLATFORM_ID);
 
-  articles = BLOG_ARTICLES;
+  articles = BLOG_ARTICLES_META;
+  activeTab = 0;
 
-  get lang() { return this.langService.lang(); }
+  get lang() {
+    return this.langService.lang();
+  }
 
   private readonly syncSeo = effect(() => {
-    this.seo.setHomeMeta(this.langService.lang());
+    const lang = this.langService.lang();
+    this.seo.setHomeMeta(lang);
+    this.structuredData.setSchemas([
+      this.structuredData.getOrganizationSchema(),
+      this.structuredData.getWebSiteSchema(),
+      this.structuredData.getBreadcrumbSchema([{ name: 'Home', path: '/' }]),
+    ]);
   });
+
+  get benefitTabs() {
+    const t = this.t;
+    return [
+      { id: 'tab1', title: t.tab1, body: t.tab1body },
+      { id: 'tab2', title: t.tab2, body: t.tab2body },
+      { id: 'tab3', title: t.tab3, body: t.tab3body },
+      { id: 'tab4', title: t.tab4, body: t.tab4body },
+      { id: 'tab5', title: t.tab5, body: t.tab5body },
+    ];
+  }
 
   get t() {
     const pt = this.lang === 'pt';
     return {
-      // Hero — intocado
       heroEyebrow: 'DS-01® Daily Synbiotic',
       heroH1a: pt ? 'Saúde do corpo inteiro' : 'Whole body health',
       heroH1b: pt ? 'começa no intestino' : 'starts in the gut',
@@ -39,7 +60,6 @@ export class HomeComponent implements AfterViewInit {
       statLabel1: pt ? 'Cepas Probióticas' : 'Probiotic Strains',
       statLabel2: pt ? 'UFSa por dose' : 'AFU per dose',
       statLabel3: pt ? 'Ensaios Clínicos' : 'Clinical Trials',
-      // About
       aboutLabel: pt ? 'Skyseed Clinical' : 'Skyseed Clinical',
       aboutH2: pt ? 'Sobre Nós' : 'About Us',
       aboutP1: pt
@@ -61,7 +81,6 @@ export class HomeComponent implements AfterViewInit {
       aboutPillar2: pt ? 'Confiança' : 'Trust',
       aboutPillar3: pt ? 'Evolução' : 'Evolution',
       aboutPillar4: pt ? 'Bem-Estar' : 'Well-Being',
-      // Products
       productsLabel: pt ? 'Nossos Suplementos' : 'Our Supplements',
       productsH2: pt
         ? 'Suplementação pensada para o bem-estar do dia a dia'
@@ -85,7 +104,6 @@ export class HomeComponent implements AfterViewInit {
         : 'Supplementation focused on intestinal well-being, designed for those seeking to support microbiome balance as part of a healthy routine.',
       p3price: pt ? 'Consulte disponibilidade' : 'Check availability',
       shopNow: pt ? 'Saiba Mais' : 'Learn More',
-      // Science glass
       sgEyebrow: pt ? '• NOSSA ABORDAGEM' : '• OUR APPROACH',
       sgTitle: pt
         ? 'Cada fórmula é construída com critério, do ingrediente à produção.'
@@ -101,7 +119,6 @@ export class HomeComponent implements AfterViewInit {
       innerCapsuleDesc: pt
         ? 'Processos rigorosos de fabricação garantem consistência e segurança em cada lote produzido.'
         : 'Rigorous manufacturing processes ensure consistency and safety in every batch produced.',
-      // Benefits
       benefitsLabel: pt ? 'Nosso Compromisso' : 'Our Commitment',
       benefitsH2a: pt ? 'Bem-estar com' : 'Well-being with',
       benefitsH2b: pt ? 'transparência e critério' : 'transparency and care',
@@ -132,7 +149,6 @@ export class HomeComponent implements AfterViewInit {
       disclaimer: pt
         ? '*Estas afirmações não foram avaliadas pela ANVISA. Este produto não se destina a diagnosticar, tratar, curar ou prevenir qualquer doença.'
         : '*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.',
-      // Learn / Blog
       learnLabel: pt ? 'Conteúdo Educativo' : 'Educational Content',
       learnH2: pt ? 'Conteúdo para o seu bem-estar' : 'Content for your well-being',
       learnDesc: pt
@@ -140,10 +156,12 @@ export class HomeComponent implements AfterViewInit {
         : 'Articles on supplementation, healthy habits, and quality of life to support your daily choices.',
       readArticle: pt ? 'Ler artigo' : 'Read article',
       viewAllBlog: pt ? 'Ver todos os artigos →' : 'View all articles →',
-      // Testimonials
       testiLabel: pt ? 'Na Rotina de Quem Confia' : 'In the Routine of Those Who Trust',
       testiH2a: pt ? 'Suplementação que se' : 'Supplementation that',
       testiH2b: pt ? 'integra ao dia a dia' : 'fits into daily life',
+      scrollLeft: pt ? 'Rolar depoimentos para a esquerda' : 'Scroll testimonials left',
+      scrollRight: pt ? 'Rolar depoimentos para a direita' : 'Scroll testimonials right',
+      fiveStars: pt ? '5 de 5 estrelas' : '5 out of 5 stars',
       testi1: pt
         ? '"Gosto da simplicidade de incluir o suplemento na minha rotina. A embalagem é clara e o processo é descomplicado."'
         : '"I like how simple it is to include the supplement in my routine. The packaging is clear and the process is straightforward."',
@@ -164,7 +182,6 @@ export class HomeComponent implements AfterViewInit {
         ? '"Para mim, o mais importante é a facilidade de manter a suplementação como parte natural da rotina."'
         : '"For me, the most important thing is how easy it is to keep supplementation as a natural part of my routine."',
       testi5author: pt ? 'J. F. — Cliente' : 'J. F. — Customer',
-      // Press → Pilares
       pressLabel: pt ? 'Nossos Pilares' : 'Our Pillars',
       press1: pt ? 'Qualidade' : 'Quality',
       press2: pt ? 'Segurança' : 'Safety',
@@ -172,7 +189,6 @@ export class HomeComponent implements AfterViewInit {
       press4: pt ? 'Ciência' : 'Science',
       press5: pt ? 'Bem-estar' : 'Well-Being',
       press6: pt ? 'Confiança' : 'Trust',
-      // CTA
       ctaLabel: pt ? 'Comece Hoje' : 'Start Today',
       ctaH2: pt
         ? 'Uma vida melhor começa com escolhas melhores'
@@ -181,28 +197,67 @@ export class HomeComponent implements AfterViewInit {
     };
   }
 
+  selectTab(index: number) {
+    this.activeTab = index;
+  }
+
+  onTabKeydown(event: KeyboardEvent, index: number) {
+    const tabs = this.benefitTabs;
+    let next = index;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        next = (index + 1) % tabs.length;
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        next = (index - 1 + tabs.length) % tabs.length;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = tabs.length - 1;
+        break;
+      case 'Enter':
+      case ' ':
+        this.selectTab(index);
+        event.preventDefault();
+        return;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    this.selectTab(next);
+    if (isPlatformBrowser(this.platformId)) {
+      document.getElementById(`benefit-tab-${next}`)?.focus();
+    }
+  }
+
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const fadeEls = document.querySelectorAll('.fade-up');
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add('visible');
+        });
       }, { threshold: 0.1 });
-      fadeEls.forEach(el => observer.observe(el));
+      fadeEls.forEach((el) => observer.observe(el));
     }
-
-    const tabs = document.querySelectorAll('.tab-item');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-      });
-    });
 
     const scroll = document.getElementById('testiScroll');
     const scrollLeftBtn = document.getElementById('scrollLeft');
     const scrollRightBtn = document.getElementById('scrollRight');
-    if (scrollLeftBtn && scroll) scrollLeftBtn.addEventListener('click', () => scroll.scrollBy({ left: -344, behavior: 'smooth' }));
-    if (scrollRightBtn && scroll) scrollRightBtn.addEventListener('click', () => scroll.scrollBy({ left: 344, behavior: 'smooth' }));
+    if (scrollLeftBtn && scroll) {
+      scrollLeftBtn.addEventListener('click', () => scroll.scrollBy({ left: -344, behavior: 'smooth' }));
+    }
+    if (scrollRightBtn && scroll) {
+      scrollRightBtn.addEventListener('click', () => scroll.scrollBy({ left: 344, behavior: 'smooth' }));
+    }
 
     const scrollIfFragment = (fragment: string | null) => {
       if (!fragment) return;

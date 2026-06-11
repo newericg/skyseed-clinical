@@ -1,5 +1,5 @@
 <!-- Promo Banner -->
-<div class="promo-banner" [class.hidden]="isScrolled">
+<div class="promo-banner" [class.hidden]="isScrolled" aria-hidden="true">
   <p>{{ lang === 'pt' ? 'Suplementação com qualidade para o seu bem-estar diário ➔' : 'Quality supplementation for your daily well-being ➔' }}</p>
 </div>
 
@@ -8,8 +8,8 @@
 
     <!-- LEFT PILL: Logo + Desktop Nav -->
     <div class="header-pill header-pill-left">
-      <a routerLink="/" class="header-logo" aria-label="Skyseed Clinical — Página inicial">
-        <img src="logo.png" alt="Skyseed" class="logo-img">
+      <a routerLink="/" class="header-logo" [attr.aria-label]="lang === 'pt' ? 'Skyseed Clinical — Página inicial' : 'Skyseed Clinical — Home'">
+        <img src="logo.png" alt="" class="logo-img" width="1892" height="1179">
       </a>
 
       <nav class="header-nav" [attr.aria-label]="lang === 'pt' ? 'Navegação principal' : 'Main navigation'">
@@ -20,6 +20,7 @@
                 [routerLink]="item.route"
                 [fragment]="item.fragment"
                 [class.active]="isActive(item)"
+                [attr.aria-current]="isActive(item) ? 'page' : null"
                 (click)="closeMenu()"
               >{{ item.label[lang] }}</a>
             </li>
@@ -30,11 +31,25 @@
 
     <!-- RIGHT PILL: Desktop only actions -->
     <div class="header-pill header-pill-right desktop-only">
-      <button class="lang-flag" [class.active]="lang === 'pt'" (click)="setLang('pt')" title="Português" aria-label="Português">
-        <img src="https://flagcdn.com/w40/br.png" alt="" width="24" height="16">
+      <button
+        type="button"
+        class="lang-flag"
+        [class.active]="lang === 'pt'"
+        (click)="setLang('pt')"
+        [attr.aria-label]="lang === 'pt' ? 'Português, idioma selecionado' : 'Português'"
+        [attr.aria-pressed]="lang === 'pt'"
+      >
+        <img src="/assets/flags/br.png" alt="" width="24" height="16">
       </button>
-      <button class="lang-flag" [class.active]="lang === 'en'" (click)="setLang('en')" title="English" aria-label="English">
-        <img src="https://flagcdn.com/w40/us.png" alt="" width="24" height="16">
+      <button
+        type="button"
+        class="lang-flag"
+        [class.active]="lang === 'en'"
+        (click)="setLang('en')"
+        [attr.aria-label]="lang === 'en' ? 'English, selected language' : 'English'"
+        [attr.aria-pressed]="lang === 'en'"
+      >
+        <img src="/assets/flags/us.png" alt="" width="24" height="16">
       </button>
       <a routerLink="/contato" class="btn-get-started" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         {{ lang === 'pt' ? 'Fale Conosco' : 'Contact Us' }}
@@ -43,12 +58,14 @@
 
     <!-- Mobile: hamburger -->
     <button
+      #hamburgerBtn
+      type="button"
       class="hamburger mobile-only"
       [class.open]="mobileMenuOpen"
       (click)="toggleMenu()"
       [attr.aria-expanded]="mobileMenuOpen"
       aria-controls="mobile-nav"
-      aria-label="Menu"
+      [attr.aria-label]="menuLabel"
     >
       <span></span><span></span><span></span>
     </button>
@@ -58,12 +75,16 @@
 
 <!-- Mobile Full Screen Menu Overlay -->
 <div
+  #mobileNav
   id="mobile-nav"
   class="mobile-nav-overlay"
   [class.open]="mobileMenuOpen"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="lang === 'pt' ? 'Menu de navegação' : 'Navigation menu'"
   [attr.aria-hidden]="!mobileMenuOpen"
 >
-  <button class="overlay-close" (click)="toggleMenu()" aria-label="Fechar menu">
+  <button type="button" class="overlay-close" (click)="toggleMenu()" [attr.aria-label]="closeMenuLabel">
     <span></span><span></span>
   </button>
 
@@ -75,6 +96,7 @@
             [routerLink]="item.route"
             [fragment]="item.fragment"
             [class.active]="isActive(item)"
+            [attr.aria-current]="isActive(item) ? 'page' : null"
             (click)="closeMenu()"
           >{{ item.label[lang] }}</a>
         </li>
@@ -84,11 +106,25 @@
     <div class="mobile-divider"></div>
 
     <div class="mobile-lang-row">
-      <button class="lang-flag-mobile" [class.active]="lang === 'pt'" (click)="setLang('pt')">
-        <img src="https://flagcdn.com/w40/br.png" alt="" width="22" height="15"> Português
+      <button
+        type="button"
+        class="lang-flag-mobile"
+        [class.active]="lang === 'pt'"
+        (click)="setLang('pt')"
+        [attr.aria-pressed]="lang === 'pt'"
+        [attr.aria-label]="lang === 'pt' ? 'Português, idioma selecionado' : 'Português'"
+      >
+        <img src="/assets/flags/br.png" alt="" width="22" height="15"> Português
       </button>
-      <button class="lang-flag-mobile" [class.active]="lang === 'en'" (click)="setLang('en')">
-        <img src="https://flagcdn.com/w40/us.png" alt="" width="22" height="15"> English
+      <button
+        type="button"
+        class="lang-flag-mobile"
+        [class.active]="lang === 'en'"
+        (click)="setLang('en')"
+        [attr.aria-pressed]="lang === 'en'"
+        [attr.aria-label]="lang === 'en' ? 'English, selected language' : 'English'"
+      >
+        <img src="/assets/flags/us.png" alt="" width="22" height="15"> English
       </button>
     </div>
 

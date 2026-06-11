@@ -17,7 +17,7 @@
     </div>
 
     @if (showPagination) {
-      <nav class="blog-pagination" [attr.aria-label]="t.page">
+      <nav class="blog-pagination" [attr.aria-label]="t.pagination">
         @if (currentPage > 1) {
           <a
             class="pagination-btn"
@@ -25,7 +25,7 @@
             [queryParams]="{ page: currentPage - 1 }"
           >{{ t.prev }}</a>
         }
-        <span class="pagination-info">{{ t.page }} {{ currentPage }} / {{ totalPages }}</span>
+        <span class="pagination-info" aria-current="page">{{ t.page }} {{ currentPage }} / {{ totalPages }}</span>
         @if (currentPage < totalPages) {
           <a
             class="pagination-btn"

@@ -21,10 +21,11 @@ footer {
 
 .footer-brand {
   .nav-logo {
-    color: var(--offwhite);
     display: block;
-    margin-bottom: 20px;
-    font-size: 26px;
+    height: 60px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   p {
@@ -96,24 +97,45 @@ footer {
 .footer-copy {
   font-size: 12px;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.04em;
+}
+
+.footer-logo-link {
+  display: block;
+  margin-bottom: 24px;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--green-light);
+    outline-offset: 2px;
+  }
 }
 
 .footer-legal {
   display: flex;
   gap: 24px;
+  flex-wrap: wrap;
+}
 
-  a {
-    font-size: 12px;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
-    text-decoration: none;
-    transition: color 0.2s;
+.footer-legal-item,
+.footer-col a,
+.social-link {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  transition: color 0.2s;
+}
 
-    &:hover {
-      color: rgba(255, 255, 255, 0.8);
-    }
+.footer-col a {
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--green-light);
+    outline-offset: 2px;
   }
 }
 
