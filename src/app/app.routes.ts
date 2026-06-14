@@ -30,6 +30,18 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/contato/contato').then((m) => m.ContatoComponent),
   },
   {
+    path: 'politica-de-privacidade',
+    loadComponent: () =>
+      import('./pages/politica-privacidade/politica-privacidade').then(
+        (m) => m.PoliticaPrivacidadeComponent,
+      ),
+  },
+  {
+    path: 'termos-de-uso',
+    loadComponent: () =>
+      import('./pages/termos-de-uso/termos-de-uso').then((m) => m.TermosDeUsoComponent),
+  },
+  {
     path: '**',
     loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFoundComponent),
   },

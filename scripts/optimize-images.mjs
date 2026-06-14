@@ -3,6 +3,36 @@ import path from 'path';
 import sharp from 'sharp';
 
 const publicDir = 'public';
+const logoTargets = [
+  { input: 'logo.png', output: 'assets/logo/logo-header', height: 96 },
+  { input: 'logo-negativo.png', output: 'assets/logo/logo-footer', height: 120 },
+];
+
+for (const target of logoTargets) {
+  const inputPath = path.join(publicDir, target.input);
+  if (!fs.existsSync(inputPath)) {
+    console.warn('Skip missing:', inputPath);
+    continue;
+  }
+
+  const pngPath = path.join(publicDir, `${target.output}.png`);
+  const webpPath = path.join(publicDir, `${target.output}.webp`);
+  fs.mkdirSync(path.dirname(pngPath), { recursive: true });
+
+  await sharp(inputPath)
+    .resize({ height: target.height, withoutEnlargement: true })
+    .png({ compressionLevel: 9 })
+    .toFile(pngPath);
+  await sharp(inputPath)
+    .resize({ height: target.height, withoutEnlargement: true })
+    .webp({ quality: 90 })
+    .toFile(webpPath);
+
+  const pngSize = fs.statSync(pngPath).size;
+  const webpSize = fs.statSync(webpPath).size;
+  console.log(`${target.output}: png ${Math.round(pngSize / 1024)}KB, webp ${Math.round(webpSize / 1024)}KB`);
+}
+
 const targets = [
   { file: 'assets/hero/hero-desktop.jpeg', maxWidth: 1920, quality: 78 },
   { file: 'assets/hero/hero-mobile.jpeg', maxWidth: 1080, quality: 78 },

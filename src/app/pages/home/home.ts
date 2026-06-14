@@ -1,13 +1,14 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, PLATFORM_ID, effect, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ContactFormComponent } from '../../components/contact-form/contact-form';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
 import { StructuredDataService } from '../../services/structured-data.service';
 import { BLOG_ARTICLES_META } from '../../data/blog-articles-meta';
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [RouterLink, ContactFormComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -50,18 +51,19 @@ export class HomeComponent implements AfterViewInit {
     const pt = this.lang === 'pt';
     return {
       heroEyebrow: 'DS-01® Daily Synbiotic',
-      heroH1a: pt ? 'Saúde do corpo inteiro' : 'Whole body health',
-      heroH1b: pt ? 'começa no intestino' : 'starts in the gut',
+      heroH1a: pt ? 'Nutrição de precisão' : 'Precision nutrition',
+      heroH1b: pt ? 'para uma vida em equilíbrio.' : 'for a balanced life.',
       heroSub: pt
-        ? 'Formulações com suporte contínuo usando ingredientes cientificamente estudados para reduzir inchaço, gases e irregularidades.*'
-        : 'Formulations that provide sustained support using key scientifically and clinically-studied ingredients to ease bloating, gas, and irregularity.*',
+        ? 'Fórmulas desenvolvidas para atuar em diferentes sistemas do organismo, unindo ciência, qualidade e propósito.'
+        : 'Formulas developed to act across different body systems, combining science, quality, and purpose.',
       heroShop: pt ? 'Comprar Agora' : 'Shop Now',
       heroScience: pt ? 'Nossa Ciência' : 'Our Science',
       statLabel1: pt ? 'Cepas Probióticas' : 'Probiotic Strains',
       statLabel2: pt ? 'UFSa por dose' : 'AFU per dose',
       statLabel3: pt ? 'Ensaios Clínicos' : 'Clinical Trials',
-      aboutLabel: pt ? 'Skyseed Clinical' : 'Skyseed Clinical',
-      aboutH2: pt ? 'Sobre Nós' : 'About Us',
+      aboutH2: pt
+        ? 'Sua jornada de bem-estar começa com Skyseed'
+        : 'Your well-being journey starts with Skyseed',
       aboutP1: pt
         ? 'Na Skyseed Clinical, acreditamos que cuidar da saúde não deveria ser complicado. Por isso, desenvolvemos suplementos com foco no que realmente importa: qualidade, segurança e resultados consistentes para quem busca mais bem-estar no dia a dia.'
         : 'At Skyseed Clinical, we believe taking care of your health should not be complicated. That is why we develop supplements focused on what truly matters: quality, safety, and consistent support for those seeking more well-being in daily life.',
@@ -150,15 +152,14 @@ export class HomeComponent implements AfterViewInit {
         ? '*Estas afirmações não foram avaliadas pela ANVISA. Este produto não se destina a diagnosticar, tratar, curar ou prevenir qualquer doença.'
         : '*These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.',
       learnLabel: pt ? 'Conteúdo Educativo' : 'Educational Content',
-      learnH2: pt ? 'Conteúdo para o seu bem-estar' : 'Content for your well-being',
+      learnH2: pt ? 'Conteúdo educativo' : 'Educational content',
       learnDesc: pt
         ? 'Artigos sobre suplementação, hábitos saudáveis e qualidade de vida para apoiar suas escolhas no dia a dia.'
         : 'Articles on supplementation, healthy habits, and quality of life to support your daily choices.',
       readArticle: pt ? 'Ler artigo' : 'Read article',
       viewAllBlog: pt ? 'Ver todos os artigos →' : 'View all articles →',
       testiLabel: pt ? 'Na Rotina de Quem Confia' : 'In the Routine of Those Who Trust',
-      testiH2a: pt ? 'Suplementação que se' : 'Supplementation that',
-      testiH2b: pt ? 'integra ao dia a dia' : 'fits into daily life',
+      testiH2a: pt ? 'Na rotina de quem confia' : 'In the routine of those who trust',
       scrollLeft: pt ? 'Rolar depoimentos para a esquerda' : 'Scroll testimonials left',
       scrollRight: pt ? 'Rolar depoimentos para a direita' : 'Scroll testimonials right',
       fiveStars: pt ? '5 de 5 estrelas' : '5 out of 5 stars',
@@ -189,11 +190,11 @@ export class HomeComponent implements AfterViewInit {
       press4: pt ? 'Ciência' : 'Science',
       press5: pt ? 'Bem-estar' : 'Well-Being',
       press6: pt ? 'Confiança' : 'Trust',
-      ctaLabel: pt ? 'Comece Hoje' : 'Start Today',
-      ctaH2: pt
-        ? 'Uma vida melhor começa com escolhas melhores'
-        : 'A better life starts with better choices',
-      ctaBtn: pt ? 'Conheça Nossos Suplementos' : 'Discover Our Supplements',
+      ctaTitle: pt ? 'Fale Conosco' : 'Contact Us',
+      ctaSubtitle: pt
+        ? 'Estamos prontos para ajudar. Entre em contato com nossa equipe para tirar dúvidas, obter informações ou falar conosco.'
+        : 'We are ready to help. Get in touch with our team to ask questions, get information, or speak with us.',
+      ctaBtn: pt ? 'Entrar em Contato' : 'Get in Touch',
     };
   }
 

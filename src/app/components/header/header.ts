@@ -8,7 +8,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
 import { LanguageService, Lang } from '../../services/language.service';
 
@@ -21,7 +21,7 @@ export interface NavItem {
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -40,11 +40,10 @@ export class HeaderComponent implements OnDestroy {
   private scrollTicking = false;
 
   readonly navItems: NavItem[] = [
+    { id: 'home', label: { pt: 'Página inicial', en: 'Home' }, route: '/' },
     { id: 'about', label: { pt: 'Sobre Nós', en: 'About Us' }, route: '/', fragment: 'about' },
     { id: 'lancamentos', label: { pt: 'Lançamentos', en: 'Launches' }, route: '/lancamentos' },
     { id: 'blog', label: { pt: 'Blog', en: 'Blog' }, route: '/blog' },
-    { id: 'onde-comprar', label: { pt: 'Onde Comprar', en: 'Where to Buy' }, route: '/onde-comprar' },
-    { id: 'contato', label: { pt: 'Fale Conosco', en: 'Contact Us' }, route: '/contato' },
   ];
 
   private routerSub: Subscription;
@@ -124,6 +123,9 @@ export class HeaderComponent implements OnDestroy {
   }
 
   isActive(item: NavItem): boolean {
+    if (item.route === '/' && !item.fragment) {
+      return this.currentUrl === '/' && !this.currentFragment;
+    }
     if (item.fragment) {
       return this.currentUrl === '/' && this.currentFragment === item.fragment;
     }

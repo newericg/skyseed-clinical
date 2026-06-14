@@ -1,0 +1,45 @@
+@use 'styles/legal-page' as legal;
+
+.legal-page {
+  @include legal.legal-page-shell;
+}
+
+.legal-inner {
+  @include legal.legal-page-inner;
+}
+
+.legal-hero {
+  @include legal.legal-page-hero;
+}
+
+.legal-title {
+  @include legal.legal-page-title;
+}
+
+.legal-updated {
+  @include legal.legal-page-updated;
+}
+
+.legal-lead {
+  @include legal.legal-page-lead;
+}
+
+.legal-body {
+  @include legal.legal-page-body;
+}
+
+.legal-section {
+  @include legal.legal-page-section;
+}
+
+.legal-heading {
+  @include legal.legal-page-heading;
+}
+
+.legal-paragraph {
+  @include legal.legal-page-paragraph;
+}
+
+.legal-list {
+  @include legal.legal-page-list;
+}

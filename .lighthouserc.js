@@ -2,7 +2,7 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: './dist/skyseed/browser',
-      url: ['/', '/blog', '/blog/magnesio-equilibrio-organismo', '/contato', '/onde-comprar', '/lancamentos'],
+      url: ['/', '/blog', '/blog/magnesio-equilibrio-organismo', '/contato', '/lancamentos'],
       numberOfRuns: 1,
     },
     assert: {

@@ -1,13 +1,20 @@
 <!-- HERO -->
 <section class="hero">
-  <h1 class="sr-only">{{ t.heroH1a }} {{ t.heroH1b }}</h1>
   <picture>
     <source media="(min-width: 901px)" srcset="/assets/hero/hero-desktop.webp" type="image/webp">
     <source media="(min-width: 901px)" srcset="/assets/hero/hero-desktop.jpeg">
     <source srcset="/assets/hero/hero-mobile.webp" type="image/webp">
     <img src="/assets/hero/hero-mobile.jpeg" class="hero-image" alt="" fetchpriority="high" loading="eager" width="1920" height="1080">
   </picture>
-  <a routerLink="/onde-comprar" class="btn-primary hero-buy-btn">{{ t.heroShop }}</a>
+  <div class="hero-content">
+    <h1 class="hero-title">
+      <span class="hero-title-line">{{ t.heroH1a }}</span>
+      <span class="hero-title-line hero-title-line--accent">{{ t.heroH1b }}</span>
+    </h1>
+    <span class="hero-divider" aria-hidden="true"></span>
+    <p class="hero-subtitle">{{ t.heroSub }}</p>
+    <a routerLink="/lancamentos" class="hero-buy-btn">{{ t.heroShop }}</a>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -22,7 +29,6 @@
   <div class="about-container">
     <div class="about-layout fade-up">
       <div class="about-text">
-        <p class="section-label">{{ t.aboutLabel }}</p>
         <h2 class="section-h2 about-title">{{ t.aboutH2 }}</h2>
         <div class="about-body">
           <p class="about-p">{{ t.aboutP1 }}</p>
@@ -88,7 +94,7 @@
 </section>
 
 <!-- SCIENCE (GLASS BANNER) -->
-<section class="science-glass-section" id="science">
+<!-- <section class="science-glass-section" id="science">
   <div class="science-glass-card fade-up">
     <div class="sg-left">
       <p class="sg-eyebrow">{{ t.sgEyebrow }}</p>
@@ -117,10 +123,10 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- BENEFITS -->
-<section class="benefits-section" id="benefits">
+<!-- <section class="benefits-section" id="benefits">
   <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap">
     <div>
       <p class="section-label">{{ t.benefitsLabel }}</p>
@@ -166,13 +172,13 @@
       <p class="benefit-disclaimer">{{ t.disclaimer }}</p>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- LEARN / BLOG -->
 <section class="product-section" id="learn">
   <div class="product-header">
     <div class="product-header-left">
-      <p class="section-label">{{ t.learnLabel }}</p>
+      <!-- <p class="section-label">{{ t.learnLabel }}</p> -->
       <h2 class="section-h2">{{ t.learnH2 }}</h2>
     </div>
     <div class="product-header-right">
@@ -213,8 +219,8 @@
 <section class="testimonials-section">
   <div class="testimonials-header">
     <div>
-      <p class="section-label">{{ t.testiLabel }}</p>
-      <h2 class="section-h2">{{ t.testiH2a }}<br>{{ t.testiH2b }}</h2>
+      <!-- <p class="section-label">{{ t.testiLabel }}</p> -->
+      <h2 class="section-h2">{{ t.testiH2a }}</h2>
     </div>
     <div class="testi-scroll-btns">
       <button type="button" class="scroll-btn" id="scrollLeft" [attr.aria-label]="t.scrollLeft">←</button>
@@ -251,7 +257,7 @@
 </section>
 
 <!-- PRESS -->
-<section class="press-section">
+<!-- <section class="press-section">
   <p class="press-label">{{ t.pressLabel }}</p>
   <div class="press-logos">
     <span class="press-logo">{{ t.press1 }}</span>
@@ -261,13 +267,31 @@
     <span class="press-logo">{{ t.press5 }}</span>
     <span class="press-logo">{{ t.press6 }}</span>
   </div>
-</section>
+</section> -->
 
-<!-- CTA -->
-<div class="cta-band">
-  <div class="cta-band-text">
-    <p class="section-label">{{ t.ctaLabel }}</p>
-    <h2 class="section-h2">{{ t.ctaH2 }}</h2>
+<!-- FALE CONOSCO -->
+<section class="contact-cta-section" aria-labelledby="contact-cta-title">
+  <div class="contact-cta-band">
+    <div class="contact-cta-bg" aria-hidden="true"></div>
+    <div class="contact-cta-inner">
+      <div class="contact-cta-intro">
+        <div class="contact-cta-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 14h32v20H8V14z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M8 14l16 12 16-12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M2 22h4M2 28h4M2 34h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+          </svg>
+        </div>
+        <div class="contact-cta-text">
+          <h2 id="contact-cta-title" class="contact-cta-title">{{ t.ctaTitle }}</h2>
+          <p class="contact-cta-subtitle">{{ t.ctaSubtitle }}</p>
+        </div>
+      </div>
+      <app-contact-form
+        layout="band"
+        idPrefix="home-contact"
+        [submitLabel]="t.ctaBtn"
+      />
+    </div>
   </div>
-  <a href="#benefits" class="btn-light">{{ t.ctaBtn }}</a>
-</div>
+</section>

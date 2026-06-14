@@ -1,0 +1,30 @@
+<div class="legal-page">
+  <div class="legal-inner">
+    <header class="legal-hero">
+      <p class="section-label">{{ t.label }}</p>
+      <h1 class="legal-title">{{ t.title }}</h1>
+      <p class="legal-updated">{{ t.updated }}</p>
+      <p class="legal-lead">{{ t.intro }}</p>
+    </header>
+
+    <div class="legal-body">
+      @for (section of sections; track section.heading ?? section.paragraphs[0]) {
+        <section class="legal-section">
+          @if (section.heading) {
+            <h2 class="legal-heading">{{ section.heading }}</h2>
+          }
+          @for (para of section.paragraphs; track para) {
+            <p class="legal-paragraph">{{ para }}</p>
+          }
+          @if (section.list?.length) {
+            <ul class="legal-list">
+              @for (item of section.list; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          }
+        </section>
+      }
+    </div>
+  </div>
+</div>

@@ -132,6 +132,34 @@ export class SeoService {
     );
   }
 
+  setPoliticaPrivacidadeMeta(lang: Lang) {
+    const pt = lang === 'pt';
+    this.setPageSeo(
+      {
+        title: pt ? 'Política de Privacidade | Skyseed Clinical' : 'Privacy Policy | Skyseed Clinical',
+        description: pt
+          ? 'Saiba como a Skyseed Clinical coleta, utiliza e protege suas informações pessoais.'
+          : 'Learn how Skyseed Clinical collects, uses, and protects your personal information.',
+        path: '/politica-de-privacidade',
+      },
+      lang,
+    );
+  }
+
+  setTermosDeUsoMeta(lang: Lang) {
+    const pt = lang === 'pt';
+    this.setPageSeo(
+      {
+        title: pt ? 'Termos de Uso | Skyseed Clinical' : 'Terms of Use | Skyseed Clinical',
+        description: pt
+          ? 'Leia os Termos de Uso do site Skyseed Clinical e as condições para utilização dos nossos serviços.'
+          : 'Read the Skyseed Clinical website Terms of Use and the conditions for using our services.',
+        path: '/termos-de-uso',
+      },
+      lang,
+    );
+  }
+
   setNotFoundMeta(lang: Lang) {
     const pt = lang === 'pt';
     this.setPageSeo(

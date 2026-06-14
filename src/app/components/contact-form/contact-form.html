@@ -1,0 +1,100 @@
+<form
+  class="contact-form"
+  [class.contact-form--page]="layout() === 'page'"
+  [class.contact-form--band]="layout() === 'band'"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  novalidate
+>
+  <div class="contact-form-fields">
+    @if (submitted()) {
+      <div class="form-success" role="status">{{ t.success }}</div>
+    }
+    @if (error()) {
+      <div class="form-error" role="alert">{{ t.error }}</div>
+    }
+
+    <div class="form-row form-row--split">
+      <div class="form-field">
+        <label [for]="fieldId('name')" [class.sr-only]="layout() === 'band'">{{ t.name }}</label>
+        <input
+          [id]="fieldId('name')"
+          type="text"
+          formControlName="name"
+          [placeholder]="layout() === 'band' ? t.name : ''"
+          autocomplete="name"
+          required
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.name.touched && form.controls.name.invalid"
+          [attr.aria-describedby]="fieldId('name-error')"
+          [class.invalid]="form.controls.name.touched && form.controls.name.invalid"
+        />
+        @if (fieldError('name'); as err) {
+          <p [id]="fieldId('name-error')" class="field-error" role="alert">{{ err }}</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label [for]="fieldId('phone')" [class.sr-only]="layout() === 'band'">
+          {{ t.phone }}
+          @if (layout() === 'page') {
+            <span class="optional">{{ t.optional }}</span>
+          }
+        </label>
+        <input
+          [id]="fieldId('phone')"
+          type="tel"
+          formControlName="phone"
+          [placeholder]="layout() === 'band' ? t.phone : ''"
+          autocomplete="tel"
+        />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label [for]="fieldId('email')" [class.sr-only]="layout() === 'band'">{{ t.email }}</label>
+      <input
+        [id]="fieldId('email')"
+        type="email"
+        formControlName="email"
+        [placeholder]="layout() === 'band' ? t.email : ''"
+        autocomplete="email"
+        required
+        aria-required="true"
+        [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid"
+        [attr.aria-describedby]="fieldId('email-error')"
+        [class.invalid]="form.controls.email.touched && form.controls.email.invalid"
+      />
+      @if (fieldError('email'); as err) {
+        <p [id]="fieldId('email-error')" class="field-error" role="alert">{{ err }}</p>
+      }
+    </div>
+
+    <div class="form-field">
+      <label [for]="fieldId('message')" [class.sr-only]="layout() === 'band'">{{ t.message }}</label>
+      <textarea
+        [id]="fieldId('message')"
+        formControlName="message"
+        [placeholder]="layout() === 'band' ? t.message : ''"
+        [rows]="layout() === 'band' ? 3 : 6"
+        required
+        aria-required="true"
+        [attr.aria-invalid]="form.controls.message.touched && form.controls.message.invalid"
+        [attr.aria-describedby]="fieldId('message-error')"
+        [class.invalid]="form.controls.message.touched && form.controls.message.invalid"
+      ></textarea>
+      @if (fieldError('message'); as err) {
+        <p [id]="fieldId('message-error')" class="field-error" role="alert">{{ err }}</p>
+      }
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="contact-form-submit"
+    [disabled]="sending()"
+    [attr.aria-busy]="sending()"
+  >
+    {{ sending() ? t.sending : resolvedSubmitLabel }}
+  </button>
+</form>

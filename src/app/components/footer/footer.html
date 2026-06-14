@@ -2,7 +2,10 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a routerLink="/" class="footer-logo-link" [attr.aria-label]="lang === 'pt' ? 'Skyseed Clinical — Página inicial' : 'Skyseed Clinical — Home'">
-        <img src="logo-negativo.png" alt="" width="1892" height="1179" class="nav-logo">
+        <picture>
+          <source srcset="/assets/logo/logo-footer.webp" type="image/webp">
+          <img src="/assets/logo/logo-footer.png" alt="" width="96" height="60" class="nav-logo">
+        </picture>
       </a>
       <p>{{ t.blurb }}</p>
       <div class="footer-social" [attr.aria-label]="lang === 'pt' ? 'Redes sociais' : 'Social media'">
@@ -12,33 +15,30 @@
         <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="Instagram">◉</span>
       </div>
     </div>
-    <div class="footer-col">
-      <p class="footer-col-title">{{ t.products }}</p>
-      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Suplemento de Magnésio' : 'Magnesium Supplement' }}</a>
-      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Apoio ao Sono' : 'Sleep Support' }}</a>
-      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Equilíbrio Digestivo' : 'Digestive Balance' }}</a>
-      <a routerLink="/" fragment="benefits">{{ lang === 'pt' ? 'Todos os Produtos' : 'All Products' }}</a>
-    </div>
-    <div class="footer-col">
-      <p class="footer-col-title">{{ t.science }}</p>
-      <a routerLink="/" fragment="science">{{ t.approach }}</a>
-      <a routerLink="/" fragment="science">{{ t.production }}</a>
-      <a routerLink="/" fragment="benefits">{{ t.benefits }}</a>
-      <a routerLink="/" fragment="learn">{{ t.learn }}</a>
-    </div>
-    <div class="footer-col">
-      <p class="footer-col-title">{{ t.company }}</p>
+
+    <nav class="footer-col" [attr.aria-label]="t.navTitle">
+      <p class="footer-col-title">{{ t.navTitle }}</p>
       <a routerLink="/" fragment="about">{{ t.about }}</a>
+      <a routerLink="/lancamentos">{{ t.lancamentos }}</a>
+      <a routerLink="/blog">{{ t.blog }}</a>
+      <!-- <a routerLink="/onde-comprar">{{ t.whereToBuy }}</a> -->
       <a routerLink="/contato">{{ t.contact }}</a>
+    </nav>
+
+    <div class="footer-col footer-col--legal">
+      <p class="footer-col-title">{{ t.legalTitle }}</p>
+      <a routerLink="/politica-de-privacidade">{{ t.privacy }}</a>
+      <a routerLink="/termos-de-uso">{{ t.terms }}</a>
     </div>
+
+    <aside class="footer-reseller">
+      <p class="footer-reseller-title">{{ t.resellerTitle }}</p>
+      <p class="footer-reseller-desc">{{ t.resellerDesc }}</p>
+      <a routerLink="/contato" class="footer-reseller-btn">{{ t.resellerBtn }}</a>
+    </aside>
   </div>
+
   <div class="footer-bottom">
     <p class="footer-copy">{{ t.copy }}</p>
-    <div class="footer-legal" role="list">
-      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.privacy }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
-      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.terms }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
-      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.accessibility }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
-      <span class="footer-legal-item" role="listitem" aria-disabled="true">{{ t.disclaimer }}<span class="sr-only">{{ lang === 'pt' ? ' — em breve' : ' — coming soon' }}</span></span>
-    </div>
   </div>
 </footer>

@@ -1,7 +1,12 @@
 <!-- Promo Banner -->
-<div class="promo-banner" [class.hidden]="isScrolled" aria-hidden="true">
-  <p>{{ lang === 'pt' ? 'Suplementação com qualidade para o seu bem-estar diário ➔' : 'Quality supplementation for your daily well-being ➔' }}</p>
-</div>
+<a
+  routerLink="/lancamentos"
+  class="promo-banner"
+  [class.hidden]="isScrolled"
+  [attr.aria-label]="lang === 'pt' ? 'Conheça nossos produtos' : 'Discover our products'"
+>
+  <p>{{ lang === 'pt' ? 'Conheça nossos produtos ➔' : 'Discover our products ➔' }}</p>
+</a>
 
 <header class="site-header" [class.scrolled]="isScrolled">
   <div class="header-container">
@@ -9,7 +14,10 @@
     <!-- LEFT PILL: Logo + Desktop Nav -->
     <div class="header-pill header-pill-left">
       <a routerLink="/" class="header-logo" [attr.aria-label]="lang === 'pt' ? 'Skyseed Clinical — Página inicial' : 'Skyseed Clinical — Home'">
-        <img src="logo.png" alt="" class="logo-img" width="1892" height="1179">
+        <picture>
+          <source srcset="/assets/logo/logo-header.webp" type="image/webp">
+          <img src="/assets/logo/logo-header.png" alt="" class="logo-img" width="77" height="48">
+        </picture>
       </a>
 
       <nav class="header-nav" [attr.aria-label]="lang === 'pt' ? 'Navegação principal' : 'Main navigation'">
@@ -51,9 +59,6 @@
       >
         <img src="/assets/flags/us.png" alt="" width="24" height="16">
       </button>
-      <a routerLink="/contato" class="btn-get-started" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        {{ lang === 'pt' ? 'Fale Conosco' : 'Contact Us' }}
-      </a>
     </div>
 
     <!-- Mobile: hamburger -->
@@ -128,8 +133,5 @@
       </button>
     </div>
 
-    <a routerLink="/contato" class="mobile-cta" (click)="closeMenu()">
-      {{ lang === 'pt' ? 'Fale Conosco' : 'Contact Us' }}
-    </a>
   </div>
 </div>
