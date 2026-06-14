@@ -69,7 +69,8 @@ export class BlogListComponent {
     const pt = this.lang === 'pt';
     return {
       label: pt ? 'Blog' : 'Blog',
-      title: pt ? 'Conteúdo para o seu bem-estar' : 'Content for your well-being',
+      titleLine1: pt ? 'Conteúdo para o seu' : 'Content for your',
+      titleLine2: pt ? 'bem-estar' : 'well-being',
       lead: pt
         ? 'Artigos sobre suplementação, hábitos saudáveis e qualidade de vida para apoiar suas escolhas no dia a dia.'
         : 'Articles on supplementation, healthy habits, and quality of life to support your daily choices.',

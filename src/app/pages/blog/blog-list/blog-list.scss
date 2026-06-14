@@ -7,10 +7,16 @@
 
 .blog-inner {
   @include page.page-inner;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .blog-hero {
   @include page.page-hero;
+  width: 100%;
+  max-width: 42em;
+  text-align: center;
 }
 
 .blog-title {
@@ -19,15 +25,21 @@
 
 .blog-lead {
   @include page.page-lead;
+  max-width: 38em;
+  margin-inline: auto;
 }
 
 .blog-grid {
+  width: 100%;
+  align-self: stretch;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
 .blog-pagination {
+  width: 100%;
+  align-self: stretch;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,6 +76,12 @@
 @include bp.tablet-down {
   .blog-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@include bp.mobile-down {
+  .blog-title {
+    font-size: clamp(26px, 6.5vw, 34px);
   }
 }
 

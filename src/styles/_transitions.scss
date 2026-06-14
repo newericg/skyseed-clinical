@@ -1,0 +1,64 @@
+// Route transitions — View Transitions API (withViewTransitions) + fallback fade-in
+
+@keyframes route-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes route-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Keep chrome static; animate only the page body
+app-header,
+app-footer,
+app-whatsapp-button,
+.skip-link {
+  view-transition-name: none;
+}
+
+#main-content {
+  view-transition-name: main-content;
+}
+
+::view-transition-old(main-content) {
+  animation: 220ms cubic-bezier(0.4, 0, 1, 1) both route-fade-out;
+}
+
+::view-transition-new(main-content) {
+  animation: 320ms cubic-bezier(0, 0, 0.2, 1) 60ms both route-fade-in;
+}
+
+// Browsers without View Transitions API
+@supports not (view-transition-name: main-content) {
+  #main-content > :not(router-outlet) {
+    animation: 320ms cubic-bezier(0, 0, 0.2, 1) both route-fade-in;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  @supports not (view-transition-name: main-content) {
+    #main-content > :not(router-outlet) {
+      animation: none !important;
+    }
+  }
+}

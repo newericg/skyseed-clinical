@@ -59,6 +59,9 @@
       >
         <img src="/assets/flags/us.png" alt="" width="24" height="16">
       </button>
+      <a routerLink="/contato" class="btn-get-started" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ lang === 'pt' ? 'Fale Conosco' : 'Contact Us' }}
+      </a>
     </div>
 
     <!-- Mobile: hamburger -->
@@ -133,5 +136,8 @@
       </button>
     </div>
 
+    <a routerLink="/contato" class="mobile-cta" (click)="closeMenu()">
+      {{ lang === 'pt' ? 'Fale Conosco' : 'Contact Us' }}
+    </a>
   </div>
 </div>

@@ -1,0 +1,59 @@
+@use 'styles/a11y' as a11y;
+@use 'styles/breakpoints' as bp;
+
+:host {
+  display: contents;
+}
+
+.whatsapp-fab {
+  --whatsapp-green: #25d366;
+  --whatsapp-green-hover: #20bd5a;
+  --fab-size: 56px;
+  --fab-offset: 24px;
+
+  position: fixed;
+  right: max(var(--fab-offset), calc(env(safe-area-inset-right, 0px) + 16px));
+  bottom: max(var(--fab-offset), calc(env(safe-area-inset-bottom, 0px) + 16px));
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border-radius: 50%;
+  background: var(--whatsapp-green);
+  color: #fff;
+  text-decoration: none;
+  box-shadow:
+    0 4px 14px rgba(37, 211, 102, 0.35),
+    0 2px 6px rgba(10, 51, 88, 0.12);
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  @include a11y.focus-ring;
+
+  &:hover {
+    background: var(--whatsapp-green-hover);
+    transform: scale(1.06);
+    box-shadow:
+      0 6px 20px rgba(37, 211, 102, 0.42),
+      0 3px 8px rgba(10, 51, 88, 0.14);
+  }
+
+  &:active {
+    transform: scale(1.02);
+  }
+
+  @include bp.mobile-down {
+    --fab-size: 52px;
+    --fab-offset: 20px;
+  }
+}
+
+.whatsapp-fab__icon {
+  display: block;
+  flex-shrink: 0;
+}

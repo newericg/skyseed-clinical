@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { INSTAGRAM_URL } from '../../config/site.config';
 import { LanguageService } from '../../services/language.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { LanguageService } from '../../services/language.service';
 })
 export class FooterComponent {
   langService = inject(LanguageService);
+  readonly instagramUrl = INSTAGRAM_URL;
 
   get lang() {
     return this.langService.lang();

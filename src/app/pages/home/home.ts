@@ -56,14 +56,13 @@ export class HomeComponent implements AfterViewInit {
       heroSub: pt
         ? 'Fórmulas desenvolvidas para atuar em diferentes sistemas do organismo, unindo ciência, qualidade e propósito.'
         : 'Formulas developed to act across different body systems, combining science, quality, and purpose.',
-      heroShop: pt ? 'Comprar Agora' : 'Shop Now',
+      heroShop: pt ? 'Saiba Mais' : 'Learn More',
       heroScience: pt ? 'Nossa Ciência' : 'Our Science',
       statLabel1: pt ? 'Cepas Probióticas' : 'Probiotic Strains',
       statLabel2: pt ? 'UFSa por dose' : 'AFU per dose',
       statLabel3: pt ? 'Ensaios Clínicos' : 'Clinical Trials',
-      aboutH2: pt
-        ? 'Sua jornada de bem-estar começa com Skyseed'
-        : 'Your well-being journey starts with Skyseed',
+      aboutH2a: pt ? 'Sua jornada de bem-estar' : 'Your well-being journey',
+      aboutH2b: pt ? 'começa com Skyseed' : 'starts with Skyseed',
       aboutP1: pt
         ? 'Na Skyseed Clinical, acreditamos que cuidar da saúde não deveria ser complicado. Por isso, desenvolvemos suplementos com foco no que realmente importa: qualidade, segurança e resultados consistentes para quem busca mais bem-estar no dia a dia.'
         : 'At Skyseed Clinical, we believe taking care of your health should not be complicated. That is why we develop supplements focused on what truly matters: quality, safety, and consistent support for those seeking more well-being in daily life.',
@@ -190,11 +189,11 @@ export class HomeComponent implements AfterViewInit {
       press4: pt ? 'Ciência' : 'Science',
       press5: pt ? 'Bem-estar' : 'Well-Being',
       press6: pt ? 'Confiança' : 'Trust',
-      ctaTitle: pt ? 'Fale Conosco' : 'Contact Us',
+      ctaTitle: pt ? 'Fique por dentro' : 'Stay in the Loop',
       ctaSubtitle: pt
-        ? 'Estamos prontos para ajudar. Entre em contato com nossa equipe para tirar dúvidas, obter informações ou falar conosco.'
-        : 'We are ready to help. Get in touch with our team to ask questions, get information, or speak with us.',
-      ctaBtn: pt ? 'Entrar em Contato' : 'Get in Touch',
+        ? 'Cadastre-se para receber novidades, lançamentos e conteúdos sobre bem-estar.'
+        : 'Sign up to receive news, product launches, and well-being content.',
+      ctaBtn: pt ? 'Cadastrar' : 'Subscribe',
     };
   }
 

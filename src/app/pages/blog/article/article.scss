@@ -80,6 +80,7 @@
 
 .article-header {
   margin-bottom: clamp(36px, 5vw, 52px);
+  text-align: center;
 }
 
 .article-title {
@@ -91,6 +92,7 @@
   color: var(--dark);
   margin-bottom: clamp(20px, 3vw, 28px);
   max-width: 22em;
+  margin-inline: auto;
 }
 
 .article-excerpt {
@@ -99,10 +101,13 @@
   font-weight: 300;
   color: var(--muted);
   max-width: 42em;
+  margin-inline: auto;
 }
 
 .article-feature {
-  margin: 0 0 clamp(48px, 6vw, 72px);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto clamp(48px, 6vw, 72px);
   border-radius: 12px;
   overflow: hidden;
   box-shadow:

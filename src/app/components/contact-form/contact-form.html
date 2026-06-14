@@ -37,7 +37,7 @@
       <div class="form-field">
         <label [for]="fieldId('phone')" [class.sr-only]="layout() === 'band'">
           {{ t.phone }}
-          @if (layout() === 'page') {
+          @if (layout() === 'page' && !isCapture) {
             <span class="optional">{{ t.optional }}</span>
           }
         </label>
@@ -47,7 +47,15 @@
           formControlName="phone"
           [placeholder]="layout() === 'band' ? t.phone : ''"
           autocomplete="tel"
+          [required]="isCapture"
+          [attr.aria-required]="isCapture"
+          [attr.aria-invalid]="form.controls.phone.touched && form.controls.phone.invalid"
+          [attr.aria-describedby]="fieldId('phone-error')"
+          [class.invalid]="form.controls.phone.touched && form.controls.phone.invalid"
         />
+        @if (fieldError('phone'); as err) {
+          <p [id]="fieldId('phone-error')" class="field-error" role="alert">{{ err }}</p>
+        }
       </div>
     </div>
 
@@ -70,23 +78,25 @@
       }
     </div>
 
-    <div class="form-field">
-      <label [for]="fieldId('message')" [class.sr-only]="layout() === 'band'">{{ t.message }}</label>
-      <textarea
-        [id]="fieldId('message')"
-        formControlName="message"
-        [placeholder]="layout() === 'band' ? t.message : ''"
-        [rows]="layout() === 'band' ? 3 : 6"
-        required
-        aria-required="true"
-        [attr.aria-invalid]="form.controls.message.touched && form.controls.message.invalid"
-        [attr.aria-describedby]="fieldId('message-error')"
-        [class.invalid]="form.controls.message.touched && form.controls.message.invalid"
-      ></textarea>
-      @if (fieldError('message'); as err) {
-        <p [id]="fieldId('message-error')" class="field-error" role="alert">{{ err }}</p>
-      }
-    </div>
+    @if (!isCapture) {
+      <div class="form-field">
+        <label [for]="fieldId('message')" [class.sr-only]="layout() === 'band'">{{ t.message }}</label>
+        <textarea
+          [id]="fieldId('message')"
+          formControlName="message"
+          [placeholder]="layout() === 'band' ? t.message : ''"
+          [rows]="layout() === 'band' ? 3 : 6"
+          required
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.message.touched && form.controls.message.invalid"
+          [attr.aria-describedby]="fieldId('message-error')"
+          [class.invalid]="form.controls.message.touched && form.controls.message.invalid"
+        ></textarea>
+        @if (fieldError('message'); as err) {
+          <p [id]="fieldId('message-error')" class="field-error" role="alert">{{ err }}</p>
+        }
+      </div>
+    }
   </div>
 
   <button

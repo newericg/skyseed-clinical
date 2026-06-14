@@ -6,7 +6,8 @@ export interface ContactFormData {
   name: string;
   email: string;
   phone?: string;
-  message: string;
+  message?: string;
+  capture?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -15,13 +16,16 @@ export class ContactService {
   private readonly endpoint = 'https://formsubmit.co/ajax/contato@skyseed.com.br';
 
   send(data: ContactFormData) {
+    const capture = data.capture ?? false;
     const body = {
       name: data.name,
       email: data.email,
       phone: data.phone || '—',
-      message: data.message,
+      message: data.message || (capture ? 'Cadastro via homepage' : '—'),
       _replyto: data.email,
-      _subject: `Nova mensagem de ${data.name} — Fale Conosco Skyseed`,
+      _subject: capture
+        ? `Novo cadastro de ${data.name} — Skyseed Clinical`
+        : `Nova mensagem de ${data.name} — Fale Conosco Skyseed`,
       _template: 'table',
       _captcha: 'false',
     };
