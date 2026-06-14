@@ -96,8 +96,8 @@ export class SeoService {
       {
         title: pt ? 'Lançamentos | Skyseed Clinical' : 'Launches | Skyseed Clinical',
         description: pt
-          ? 'Novidades em breve. Estamos preparando os próximos lançamentos da Skyseed Clinical.'
-          : 'Coming soon. We are preparing the next Skyseed Clinical launches.',
+          ? 'Conheça o 5 Magnésios da Skyseed Clinical — suplemento com cinco formas de magnésio em cápsulas.'
+          : 'Discover 5 Magnesium by Skyseed Clinical — a supplement with five forms of magnesium in capsules.',
         path: '/lancamentos',
       },
       lang,

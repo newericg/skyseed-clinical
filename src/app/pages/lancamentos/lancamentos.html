@@ -7,9 +7,9 @@
     </header>
 
     @if (hasProducts) {
-      <div class="products-grid">
+      <div class="releases-list">
         @for (product of products; track product.slug) {
-          <app-product-card [product]="product" [ctaLabel]="t.cta" />
+          <app-product-release [product]="product" [buyLabel]="t.buyNow" />
         }
       </div>
     } @else {

@@ -1,0 +1,101 @@
+<article class="product-release">
+  <div class="product-release-visual">
+    <button
+      type="button"
+      class="product-release-image-btn"
+      (click)="openImageModal()"
+      [attr.aria-label]="expandImageLabel"
+    >
+      <img
+        [src]="product.image"
+        [alt]="product.imageAlt[lang]"
+        loading="lazy"
+        width="640"
+        height="640"
+      />
+      <span class="product-release-zoom-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" stroke-linecap="round" />
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <div class="product-release-details">
+    <header class="product-release-header">
+      <h2 class="product-release-name">{{ product.name[lang] }}</h2>
+    </header>
+
+    <div class="product-release-copy">
+      <p class="product-release-text">{{ product.intro[lang] }}</p>
+      <p class="product-release-text">{{ product.blendIntro[lang] }}</p>
+
+      <ul class="product-release-benefits">
+        @for (item of product.benefits; track item.form.pt) {
+          <li>
+            <strong>{{ item.form[lang] }}</strong>
+            <span aria-hidden="true"> → </span>
+            {{ item.benefit[lang] }}
+          </li>
+        }
+      </ul>
+
+      <p class="product-release-text">{{ product.combination[lang] }}</p>
+      <p class="product-release-closing">{{ product.closing[lang] }}</p>
+    </div>
+
+    <div class="product-release-buy">
+      <p class="product-release-buy-label">{{ buyLabel }}</p>
+      <div class="product-release-stores">
+        @for (store of product.stores; track store.id) {
+          @if (store.url) {
+            <a
+              class="store-link"
+              [href]="store.url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+            </a>
+          } @else {
+            <span class="store-link store-link--pending" [attr.aria-label]="store.name[lang]">
+              <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+            </span>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</article>
+
+@if (imageModalOpen) {
+  <div
+    class="image-modal-backdrop"
+    (click)="closeImageModal()"
+    role="presentation"
+  ></div>
+  <div
+    class="image-modal"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="product.imageAlt[lang]"
+  >
+    <button
+      type="button"
+      class="image-modal-close"
+      (click)="closeImageModal()"
+      [attr.aria-label]="closeModalLabel"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+    <img
+      [src]="product.image"
+      [alt]="product.imageAlt[lang]"
+      class="image-modal-img"
+      width="2048"
+      height="2048"
+    />
+  </div>
+}
