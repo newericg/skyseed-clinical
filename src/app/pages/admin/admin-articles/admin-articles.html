@@ -1,0 +1,57 @@
+<section class="admin-page articles-page">
+  <div class="admin-page-head">
+    <div>
+      <h2>Artigos do blog</h2>
+      <p>Gerencie rascunhos e publicações.</p>
+    </div>
+    <div class="admin-page-actions">
+      <a routerLink="/admin/articles/new" class="admin-btn admin-btn--primary">Novo artigo</a>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p class="admin-muted">Carregando…</p>
+  } @else if (error()) {
+    <p class="admin-error">{{ error() }}</p>
+  } @else if (articles().length === 0) {
+    <p class="admin-muted">Nenhum artigo cadastrado ainda.</p>
+  } @else {
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Atualizado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (article of articles(); track article.id) {
+            <tr>
+              <td>{{ article.title.pt }}</td>
+              <td><code>{{ article.slug }}</code></td>
+              <td>
+                <span
+                  class="admin-status"
+                  [class.admin-status--published]="article.status === 'published'"
+                >
+                  {{ article.status === 'published' ? 'Publicado' : 'Rascunho' }}
+                </span>
+              </td>
+              <td>{{ article.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td class="admin-row-actions">
+                <a [routerLink]="['/admin/articles', article.id, 'edit']">Editar</a>
+                @if (article.status !== 'published') {
+                  <button type="button" (click)="publish(article.id)">Publicar</button>
+                }
+                <button type="button" class="danger" (click)="remove(article.id)">Excluir</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

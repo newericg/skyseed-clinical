@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "skyseed-api",
+  "main": "workers/src/index.ts",
+  "compatibility_date": "2026-01-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "skyseed-db",
+      "database_id": "bf5c5792-34f4-437d-bd70-c0e1b3018dc5",
+      "migrations_dir": "workers/migrations"
+    }
+  ],
+  "vars": {
+    "COOKIE_NAME": "skyseed_session",
+    "SESSION_TTL_HOURS": "168",
+    "ALLOWED_ORIGIN": "http://localhost:4200"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "ALLOWED_ORIGIN": "https://skyseed.com.br"
+      }
+    }
+  }
+}

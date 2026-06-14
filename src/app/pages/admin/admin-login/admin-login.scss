@@ -1,0 +1,305 @@
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.login-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.login-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 70% at 15% 10%, rgba(118, 176, 234, 0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 55% at 85% 90%, rgba(0, 94, 183, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 70% 20%, rgba(247, 167, 15, 0.08) 0%, transparent 45%),
+    linear-gradient(165deg, #071f36 0%, var(--dark) 42%, #0c3d6b 100%);
+}
+
+.login-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 15%, transparent 78%);
+}
+
+.login-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+
+  &--1 {
+    width: clamp(220px, 32vw, 480px);
+    height: clamp(220px, 32vw, 480px);
+    top: -12%;
+    right: -8%;
+    background: rgba(118, 176, 234, 0.35);
+  }
+
+  &--2 {
+    width: clamp(180px, 24vw, 360px);
+    height: clamp(180px, 24vw, 360px);
+    bottom: -10%;
+    left: -6%;
+    background: rgba(0, 94, 183, 0.28);
+  }
+
+  &--3 {
+    width: clamp(120px, 16vw, 240px);
+    height: clamp(120px, 16vw, 240px);
+    top: 42%;
+    left: 58%;
+    background: rgba(247, 167, 15, 0.12);
+  }
+}
+
+.login-shell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 440px);
+  display: grid;
+  gap: 1.25rem;
+  animation: login-rise 0.65s ease both;
+}
+
+.login-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.75rem, 4vw, 2.5rem);
+  border-radius: 20px;
+  background: rgba(247, 246, 245, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(10, 51, 88, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.login-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dark), var(--green), var(--accent), var(--green), var(--dark));
+  background-size: 200% 100%;
+  animation: login-shimmer 8s linear infinite;
+}
+
+.login-brand {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.login-logo-link {
+  display: inline-flex;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+}
+
+.login-logo {
+  display: block;
+  height: 48px;
+  width: auto;
+}
+
+.login-badge {
+  margin: 0;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: linear-gradient(135deg, rgba(0, 94, 183, 0.1), rgba(118, 176, 234, 0.14));
+  border: 1px solid rgba(10, 51, 88, 0.1);
+}
+
+.login-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 0.4rem;
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 4vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+  }
+}
+
+.login-lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+form {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+input {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  color: var(--dark);
+  background: #fff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba(108, 129, 150, 0.65);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(0, 94, 183, 0.45);
+    box-shadow: 0 0 0 3px rgba(0, 94, 183, 0.12);
+  }
+}
+
+.form-error {
+  margin: 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  color: #912018;
+  font-size: 0.9rem;
+  background: rgba(180, 35, 24, 0.08);
+  border: 1px solid rgba(180, 35, 24, 0.15);
+}
+
+.login-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+  padding: 0.95rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  background: var(--green);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  &:hover:not(:disabled) {
+    background: var(--dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(10, 51, 88, 0.22);
+  }
+
+  &:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.login-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: login-spin 0.7s linear infinite;
+}
+
+.login-footer {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.login-back {
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--green);
+  }
+}
+
+.login-copy {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+@keyframes login-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes login-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes login-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

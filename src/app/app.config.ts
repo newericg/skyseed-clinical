@@ -36,6 +36,20 @@ export const appConfig: ApplicationConfig = {
 
           if (router.isActive(targetUrl, sameRouteConfig)) {
             transition.skipTransition();
+            return;
+          }
+
+          const pathOnly = (url: string) => url.split(/[?#]/)[0];
+          const isAdminShell = (url: string) => {
+            const path = pathOnly(url);
+            return path.startsWith('/admin') && path !== '/admin/login';
+          };
+
+          const from = pathOnly(router.url);
+          const to = pathOnly(router.serializeUrl(targetUrl));
+
+          if (isAdminShell(from) && isAdminShell(to)) {
+            transition.skipTransition();
           }
         },
       }),

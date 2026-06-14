@@ -1,5 +1,5 @@
 import { Lang } from '../services/language.service';
-import { ARTICLE_SECTIONS, BlogSection } from './blog-articles-content';
+import { getArticleSections, BlogSection } from './blog-articles-content';
 import {
   BLOG_ARTICLES_META,
   BLOG_ARTICLE_SLUGS,
@@ -18,13 +18,13 @@ export interface BlogArticle extends BlogArticleMeta {
 
 export const BLOG_ARTICLES: BlogArticle[] = BLOG_ARTICLES_META.map((meta) => ({
   ...meta,
-  sections: ARTICLE_SECTIONS[meta.slug],
+  sections: getArticleSections(meta.slug) ?? { pt: [], en: [] },
 }));
 
 export function getArticleBySlug(slug: string): BlogArticle | undefined {
   const meta = getArticleMetaBySlug(slug);
   if (!meta) return undefined;
-  const sections = ARTICLE_SECTIONS[slug];
+  const sections = getArticleSections(slug);
   if (!sections) return undefined;
   return { ...meta, sections };
 }

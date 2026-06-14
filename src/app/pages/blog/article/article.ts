@@ -4,7 +4,7 @@ import { LanguageService } from '../../../services/language.service';
 import { SeoService } from '../../../services/seo.service';
 import { StructuredDataService } from '../../../services/structured-data.service';
 import { BlogArticleMeta, getArticleMetaBySlug } from '../../../data/blog-articles-meta';
-import { BlogSection } from '../../../data/blog-articles-content';
+import { BlogSection, getArticleSections } from '../../../data/blog-articles-content';
 import { SITE_URL } from '../../../config/site.config';
 
 @Component({
@@ -35,9 +35,7 @@ export class ArticleComponent {
     const lang = this.langService.lang();
     const slug = this.articleMeta?.slug;
     if (!slug) return;
-    import('../../../data/blog-articles-content').then((mod) => {
-      this.sections = mod.ARTICLE_SECTIONS[slug]?.[lang] ?? [];
-    });
+    this.sections = getArticleSections(slug)?.[lang] ?? [];
   });
 
   private readonly syncMeta = effect(() => {

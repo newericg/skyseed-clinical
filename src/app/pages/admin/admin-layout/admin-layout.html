@@ -1,0 +1,90 @@
+<div class="admin-app">
+  <aside class="admin-sidebar" [class.is-open]="sidebarOpen()">
+    <div class="sidebar-brand">
+      <a routerLink="/admin/dashboard" class="sidebar-logo-link" aria-label="Skyseed Admin">
+        <picture>
+          <source srcset="/assets/logo/logo-footer.webp" type="image/webp" />
+          <img src="/assets/logo/logo-footer.png" alt="" width="120" height="75" class="sidebar-logo" />
+        </picture>
+      </a>
+      <p class="sidebar-badge">Painel editorial</p>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Menu do admin">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+          (click)="closeSidebar()"
+        >
+          @switch (item.icon) {
+            @case ('dashboard') {
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 13h7V4H4v9zm0 7h7v-5H4v5zm9 0h7v-9h-7v9zm0-11V4h7v5h-7z" />
+              </svg>
+            }
+            @case ('articles') {
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 4h9l3 3v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm8 1.5V8h2.5L14 5.5zM8 11h8v2H8v-2zm0 4h8v2H8v-2z" />
+              </svg>
+            }
+            @case ('users') {
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-7 8a7 7 0 0 1 14 0H5z" />
+              </svg>
+            }
+          }
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/" class="sidebar-footer-link" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h6V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-2v6H5V5z" />
+        </svg>
+        Ver site
+      </a>
+    </div>
+  </aside>
+
+  @if (sidebarOpen()) {
+    <button
+      type="button"
+      class="sidebar-backdrop"
+      aria-label="Fechar menu"
+      (click)="closeSidebar()"
+    ></button>
+  }
+
+  <div class="admin-content">
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button
+          type="button"
+          class="sidebar-toggle"
+          aria-label="Abrir menu"
+          (click)="toggleSidebar()"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16v2H4V7zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+          </svg>
+        </button>
+        <h1 class="topbar-title">{{ pageTitle() }}</h1>
+      </div>
+
+      <div class="topbar-user">
+        <span class="topbar-email">{{ userEmail() }}</span>
+        <button type="button" class="topbar-logout" (click)="logout()">Sair</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="admin-page-shell">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+</div>

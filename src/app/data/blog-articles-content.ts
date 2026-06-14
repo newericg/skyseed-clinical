@@ -1,4 +1,5 @@
 import { Lang } from '../services/language.service';
+import { PUBLISHED_ARTICLE_SECTIONS } from './blog-published.generated';
 
 export interface BlogSection {
   heading?: string;
@@ -237,3 +238,7 @@ export const ARTICLE_SECTIONS: Record<string, ArticleSections> = {
       ],
     },
 };
+
+export function getArticleSections(slug: string): ArticleSections | undefined {
+  return PUBLISHED_ARTICLE_SECTIONS[slug] ?? ARTICLE_SECTIONS[slug];
+}

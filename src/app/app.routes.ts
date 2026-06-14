@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminAuthGuard, adminGuestGuard } from './guards/admin-auth.guard';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,57 @@ export const routes: Routes = [
     path: 'termos-de-uso',
     loadComponent: () =>
       import('./pages/termos-de-uso/termos-de-uso').then((m) => m.TermosDeUsoComponent),
+  },
+  {
+    path: 'admin/login',
+    canActivate: [adminGuestGuard],
+    loadComponent: () =>
+      import('./pages/admin/admin-login/admin-login').then((m) => m.AdminLoginComponent),
+  },
+  {
+    path: 'admin',
+    canActivate: [adminAuthGuard],
+    loadComponent: () =>
+      import('./pages/admin/admin-layout/admin-layout').then((m) => m.AdminLayoutComponent),
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        data: { adminTitle: 'Dashboard' },
+        loadComponent: () =>
+          import('./pages/admin/admin-dashboard/admin-dashboard').then(
+            (m) => m.AdminDashboardComponent,
+          ),
+      },
+      {
+        path: 'articles',
+        data: { adminTitle: 'Artigos' },
+        loadComponent: () =>
+          import('./pages/admin/admin-articles/admin-articles').then((m) => m.AdminArticlesComponent),
+      },
+      {
+        path: 'articles/new',
+        data: { adminTitle: 'Novo artigo' },
+        loadComponent: () =>
+          import('./pages/admin/admin-article-editor/admin-article-editor').then(
+            (m) => m.AdminArticleEditorComponent,
+          ),
+      },
+      {
+        path: 'articles/:id/edit',
+        data: { adminTitle: 'Editar artigo' },
+        loadComponent: () =>
+          import('./pages/admin/admin-article-editor/admin-article-editor').then(
+            (m) => m.AdminArticleEditorComponent,
+          ),
+      },
+      {
+        path: 'users',
+        data: { adminTitle: 'Usuários' },
+        loadComponent: () =>
+          import('./pages/admin/admin-users/admin-users').then((m) => m.AdminUsersComponent),
+      },
+    ],
   },
   {
     path: '**',

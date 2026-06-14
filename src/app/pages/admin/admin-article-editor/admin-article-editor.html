@@ -1,0 +1,92 @@
+<section class="editor-page">
+  <div class="editor-head">
+    <div>
+      <a routerLink="/admin/articles" class="back-link">← Voltar</a>
+      <h1>{{ articleId() ? 'Editar artigo' : 'Novo artigo' }}</h1>
+    </div>
+    <button type="button" class="btn-primary" [disabled]="saving()" (click)="save()">
+      {{ saving() ? 'Salvando…' : 'Salvar rascunho' }}
+    </button>
+  </div>
+
+  @if (loading()) {
+    <p>Carregando…</p>
+  } @else {
+    <form [formGroup]="form" class="editor-form" (ngSubmit)="save()">
+      <div class="grid-2">
+        <label>Slug <input formControlName="slug" /></label>
+        <label>Data de publicação <input type="date" formControlName="publishedAt" /></label>
+      </div>
+
+      <div class="grid-2">
+        <label>Título (PT) <input formControlName="titlePt" /></label>
+        <label>Título (EN) <input formControlName="titleEn" /></label>
+      </div>
+
+      <div class="grid-2">
+        <label>Resumo (PT) <textarea rows="3" formControlName="excerptPt"></textarea></label>
+        <label>Resumo (EN) <textarea rows="3" formControlName="excerptEn"></textarea></label>
+      </div>
+
+      <div class="grid-2">
+        <label>Meta description (PT) <textarea rows="2" formControlName="metaDescriptionPt"></textarea></label>
+        <label>Meta description (EN) <textarea rows="2" formControlName="metaDescriptionEn"></textarea></label>
+      </div>
+
+      <p class="images-hint">
+        Imagens ficam em <code>public/assets/blogs/</code>. Adicione os arquivos ao repositório e informe o caminho abaixo (ex.: <code>/assets/blogs/meu-artigo-web.jpeg</code>).
+      </p>
+
+      <div class="grid-2">
+        <label>
+          Capa web
+          <input formControlName="coverWeb" placeholder="/assets/blogs/meu-artigo-web.jpeg" />
+        </label>
+        <label>
+          Capa mobile
+          <input formControlName="coverMobile" placeholder="/assets/blogs/meu-artigo-mobile.jpeg" />
+        </label>
+      </div>
+
+      <div class="grid-2">
+        <label>Alt capa (PT) <input formControlName="coverAltPt" /></label>
+        <label>Alt capa (EN) <input formControlName="coverAltEn" /></label>
+      </div>
+
+      <div class="sections-block">
+        <div class="sections-head">
+          <h2>Seções (PT)</h2>
+          <button type="button" (click)="addSection('pt')">+ Seção</button>
+        </div>
+        @for (section of sectionsPt.controls; track $index) {
+          <div class="section-card" [formGroup]="$any(section)">
+            <label>Subtítulo <input formControlName="heading" /></label>
+            <label>Parágrafos (separe com linha em branco) <textarea rows="5" formControlName="paragraphs"></textarea></label>
+            <button type="button" class="danger" (click)="removeSection('pt', $index)">Remover seção</button>
+          </div>
+        }
+      </div>
+
+      <div class="sections-block">
+        <div class="sections-head">
+          <h2>Seções (EN)</h2>
+          <button type="button" (click)="addSection('en')">+ Seção</button>
+        </div>
+        @for (section of sectionsEn.controls; track $index) {
+          <div class="section-card" [formGroup]="$any(section)">
+            <label>Subtítulo <input formControlName="heading" /></label>
+            <label>Parágrafos <textarea rows="5" formControlName="paragraphs"></textarea></label>
+            <button type="button" class="danger" (click)="removeSection('en', $index)">Remover seção</button>
+          </div>
+        }
+      </div>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+      @if (success()) {
+        <p class="success">{{ success() }}</p>
+      }
+    </form>
+  }
+</section>

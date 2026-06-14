@@ -1,0 +1,38 @@
+name: Deploy Skyseed (Preview)
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch published content
+        env:
+          SKYSEED_API_URL: ${{ vars.SKYSEED_API_URL }}
+          BUILD_API_KEY: ${{ secrets.BUILD_API_KEY }}
+        run: node scripts/fetch-published-content.mjs
+
+      - name: Build Angular site
+        run: npm run build:production
+
+      - name: Deploy Cloudflare Pages (develop branch)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler pages deploy dist/skyseed/browser --project-name=skyseed --branch=develop

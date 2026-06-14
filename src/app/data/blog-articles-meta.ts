@@ -1,4 +1,5 @@
 import { Lang } from '../services/language.service';
+import { PUBLISHED_BLOG_META, PUBLISHED_BLOG_SLUGS } from './blog-published.generated';
 
 export interface BlogCoverImage {
   web: string;
@@ -17,7 +18,7 @@ export interface BlogArticleMeta {
 
 export const BLOG_PAGE_SIZE = 6;
 
-export const BLOG_ARTICLES_META: BlogArticleMeta[] = [
+const STATIC_BLOG_ARTICLES_META: BlogArticleMeta[] = [
   {
     slug: 'magnesio-equilibrio-organismo',
     title: {
@@ -92,7 +93,21 @@ export const BLOG_ARTICLES_META: BlogArticleMeta[] = [
   },
 ];
 
-export const BLOG_ARTICLE_SLUGS = BLOG_ARTICLES_META.map((a) => a.slug);
+function mergeArticleMeta(): BlogArticleMeta[] {
+  const bySlug = new Map(STATIC_BLOG_ARTICLES_META.map((article) => [article.slug, article]));
+  for (const article of PUBLISHED_BLOG_META) {
+    bySlug.set(article.slug, article);
+  }
+  return [...bySlug.values()].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+  );
+}
+
+export const BLOG_ARTICLES_META = mergeArticleMeta();
+
+export const BLOG_ARTICLE_SLUGS = [
+  ...new Set([...STATIC_BLOG_ARTICLES_META.map((a) => a.slug), ...PUBLISHED_BLOG_SLUGS]),
+];
 
 export function getArticleMetaBySlug(slug: string): BlogArticleMeta | undefined {
   return BLOG_ARTICLES_META.find((a) => a.slug === slug);

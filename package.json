@@ -3,9 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
+    "build:production": "node scripts/fetch-published-content.mjs && ng build --configuration production",
     "build:prerender": "ng build",
+    "api:dev": "wrangler dev",
+    "api:deploy": "wrangler deploy",
+    "api:setup:local": "wrangler d1 migrations apply skyseed-db --local",
+    "db:migrate": "wrangler d1 migrations apply skyseed-db --local",
+    "db:migrate:local": "wrangler d1 migrations apply skyseed-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply skyseed-db --remote",
+    "admin:seed": "node scripts/seed-admin.mjs",
+    "content:fetch": "node scripts/fetch-published-content.mjs",
+    "cloudflare:setup": "node scripts/cloudflare-setup.mjs",
     "optimize:images": "node scripts/optimize-images.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -37,6 +47,8 @@
     "sass": "^1.100.0",
     "sharp": "^0.35.0",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "wrangler": "^4.54.0",
+    "@cloudflare/workers-types": "^4.20260101.0"
   }
 }

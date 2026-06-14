@@ -1,7 +1,11 @@
-<a class="skip-link" href="#main-content">{{ langService.lang() === 'pt' ? 'Ir para o conteúdo principal' : 'Skip to main content' }}</a>
-<app-header></app-header>
+@if (!isAdminRoute()) {
+  <a class="skip-link" href="#main-content">{{ langService.lang() === 'pt' ? 'Ir para o conteúdo principal' : 'Skip to main content' }}</a>
+  <app-header></app-header>
+}
 <main id="main-content">
   <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
-<app-whatsapp-button></app-whatsapp-button>
+@if (!isAdminRoute()) {
+  <app-footer></app-footer>
+  <app-whatsapp-button></app-whatsapp-button>
+}

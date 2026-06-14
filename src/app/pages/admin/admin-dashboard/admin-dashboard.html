@@ -1,0 +1,112 @@
+<section class="admin-page dashboard-page">
+  @if (loading()) {
+    <p class="admin-muted">Carregando painel…</p>
+  } @else if (error()) {
+    <p class="admin-error">{{ error() }}</p>
+  } @else {
+    <div class="dashboard-stats">
+      <article class="stat-card">
+        <p class="stat-label">Artigos</p>
+        <p class="stat-value">{{ articles().length }}</p>
+        <p class="stat-hint">Total no blog</p>
+      </article>
+
+      <article class="stat-card stat-card--published">
+        <p class="stat-label">Publicados</p>
+        <p class="stat-value">{{ publishedCount() }}</p>
+        <p class="stat-hint">Visíveis no site</p>
+      </article>
+
+      <article class="stat-card stat-card--draft">
+        <p class="stat-label">Rascunhos</p>
+        <p class="stat-value">{{ draftCount() }}</p>
+        <p class="stat-hint">Aguardando revisão</p>
+      </article>
+
+      <article class="stat-card stat-card--users">
+        <p class="stat-label">Usuários</p>
+        <p class="stat-value">{{ usersCount() }}</p>
+        <p class="stat-hint">Com acesso ao admin</p>
+      </article>
+    </div>
+
+    <div class="dashboard-grid">
+      <section class="admin-card dashboard-panel">
+        <div class="admin-page-head">
+          <div>
+            <h2>Atalhos</h2>
+            <p>Ações frequentes do painel editorial.</p>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <a routerLink="/admin/articles/new" class="quick-action">
+            <span class="quick-action-icon" aria-hidden="true">+</span>
+            <span>
+              <strong>Novo artigo</strong>
+              <small>Criar conteúdo para o blog</small>
+            </span>
+          </a>
+
+          <a routerLink="/admin/articles" class="quick-action">
+            <span class="quick-action-icon" aria-hidden="true">✎</span>
+            <span>
+              <strong>Gerenciar artigos</strong>
+              <small>Editar, publicar ou excluir</small>
+            </span>
+          </a>
+
+          <a routerLink="/admin/users" class="quick-action">
+            <span class="quick-action-icon" aria-hidden="true">◎</span>
+            <span>
+              <strong>Usuários</strong>
+              <small>Adicionar ou remover acessos</small>
+            </span>
+          </a>
+
+          <a routerLink="/" class="quick-action" target="_blank" rel="noopener noreferrer">
+            <span class="quick-action-icon" aria-hidden="true">↗</span>
+            <span>
+              <strong>Ver site</strong>
+              <small>Abrir o site público</small>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <section class="admin-card dashboard-panel">
+        <div class="admin-page-head">
+          <div>
+            <h2>Artigos recentes</h2>
+            <p>Últimas atualizações no blog.</p>
+          </div>
+          <a routerLink="/admin/articles" class="admin-btn admin-btn--ghost">Ver todos</a>
+        </div>
+
+        @if (recentArticles().length === 0) {
+          <p class="admin-muted">Nenhum artigo cadastrado ainda.</p>
+        } @else {
+          <ul class="recent-list">
+            @for (article of recentArticles(); track article.id) {
+              <li>
+                <div class="recent-main">
+                  <a [routerLink]="['/admin/articles', article.id, 'edit']">{{ article.title.pt }}</a>
+                  <p>{{ article.slug }}</p>
+                </div>
+                <div class="recent-meta">
+                  <span
+                    class="admin-status"
+                    [class.admin-status--published]="article.status === 'published'"
+                  >
+                    {{ article.status === 'published' ? 'Publicado' : 'Rascunho' }}
+                  </span>
+                  <time>{{ article.updatedAt | date: 'dd/MM/yyyy HH:mm' }}</time>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    </div>
+  }
+</section>

@@ -26,12 +26,32 @@
 app-header,
 app-footer,
 app-whatsapp-button,
-.skip-link {
+.skip-link,
+app-admin-layout,
+app-admin-layout .admin-sidebar,
+app-admin-layout .admin-topbar,
+app-admin-layout .admin-content {
   view-transition-name: none;
 }
 
 #main-content {
   view-transition-name: main-content;
+}
+
+#main-content:has(app-admin-layout) {
+  view-transition-name: none;
+}
+
+.admin-page-shell {
+  view-transition-name: admin-page-content;
+}
+
+::view-transition-old(admin-page-content) {
+  animation: 160ms cubic-bezier(0.4, 0, 1, 1) both route-fade-out;
+}
+
+::view-transition-new(admin-page-content) {
+  animation: 220ms cubic-bezier(0, 0, 0.2, 1) 40ms both route-fade-in;
 }
 
 ::view-transition-old(main-content) {
@@ -54,6 +74,10 @@ app-whatsapp-button,
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+
+  .admin-page-shell {
+    view-transition-name: none;
   }
 
   @supports not (view-transition-name: main-content) {
