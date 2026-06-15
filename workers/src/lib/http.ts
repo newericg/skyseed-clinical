@@ -25,8 +25,8 @@ function isAllowedOrigin(origin: string, allowed: string): boolean {
     if (host === allowedHost || host.endsWith(`.${allowedHost}`)) {
       return true;
     }
-    // Preview deployments (ex.: develop.skyseed.pages.dev)
-    return host === 'skyseed.pages.dev' || host.endsWith('.skyseed.pages.dev');
+    // Preview deployments (ex.: develop.skyseed-clinical.pages.dev)
+    return host === 'skyseed-clinical.pages.dev' || host.endsWith('.skyseed-clinical.pages.dev');
   } catch {
     return false;
   }

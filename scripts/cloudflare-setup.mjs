@@ -26,9 +26,9 @@ Skyseed — setup Cloudflare (execute na ordem)
 
 6) Deploy manual (teste)
    npm run api:deploy -- --env production
-   npx wrangler pages project create skyseed --production-branch main
+   npx wrangler pages project create skyseed-clinical --production-branch main
    npm run build:production
-   npx wrangler pages deploy dist/skyseed/browser --project-name=skyseed
+   npx wrangler pages deploy dist/skyseed/browser --project-name=skyseed-clinical
 
 7) Rotas no painel Cloudflare (Workers & Pages > skyseed-api > Settings > Triggers)
    - skyseed.com.br/api/*
@@ -54,10 +54,12 @@ Skyseed — setup Cloudflare (execute na ordem)
 11) Preview visual (branch develop, sem domínio custom)
    a) Crie a branch develop e faça push
    b) O workflow .github/workflows/deploy-develop.yml publica só o front
-   c) URLs automáticas do Cloudflare Pages:
-      - Produção (main):  https://skyseed.pages.dev
-      - Preview (develop): https://develop.skyseed.pages.dev
-      - Cada deploy também ganha URL única em Workers & Pages > skyseed > Deployments
+   c) URLs automáticas do Cloudflare Pages (projeto: skyseed-clinical):
+      - Produção (main):     https://skyseed-clinical.pages.dev
+      - Preview por branch:  https://<nome-da-branch>.skyseed-clinical.pages.dev
+        (ex.: develop → https://develop.skyseed-clinical.pages.dev)
+      - Preview por commit:  https://<hash>.skyseed-clinical.pages.dev
+        (o painel mostra essa URL; a URL da branch também funciona)
    d) Não precisa configurar DNS nem custom domain para isso funcionar
    e) Domínio próprio (opcional, depois): staging.skyseed.com.br → branch develop
 

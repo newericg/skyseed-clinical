@@ -860,7 +860,7 @@ function isAllowedOrigin(origin, allowed) {
     if (host === allowedHost || host.endsWith(`.${allowedHost}`)) {
       return true;
     }
-    return host === "skyseed.pages.dev" || host.endsWith(".skyseed.pages.dev");
+    return host === "skyseed-clinical.pages.dev" || host.endsWith(".skyseed-clinical.pages.dev");
   } catch {
     return false;
   }
