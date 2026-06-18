@@ -27,11 +27,15 @@ export interface ProductStore {
   url?: string;
 }
 
+export interface ProductReleaseImage {
+  src: string;
+  alt: Record<Lang, string>;
+}
+
 export interface ProductRelease {
   slug: string;
   name: Record<Lang, string>;
-  image: string;
-  imageAlt: Record<Lang, string>;
+  images: ProductReleaseImage[];
   intro: Record<Lang, string>;
   blendIntro: Record<Lang, string>;
   benefits: ProductMagnesiumBenefit[];
@@ -47,11 +51,36 @@ export const PRODUCT_RELEASES: ProductRelease[] = [
   {
     slug: '5-magnesios',
     name: { pt: '5 Magnésios', en: '5 Magnesium' },
-    image: '/assets/releases/magnesium.jpeg',
-    imageAlt: {
-      pt: '5 Magnésios Skyseed Clinical — suplemento alimentar em cápsulas',
-      en: '5 Magnesium Skyseed Clinical — dietary supplement in capsules',
-    },
+    images: [
+      {
+        src: '/assets/releases/magnesium.jpeg',
+        alt: {
+          pt: '5 Magnésios Skyseed Clinical — embalagem frontal do suplemento',
+          en: '5 Magnesium Skyseed Clinical — front packaging of the supplement',
+        },
+      },
+      {
+        src: '/assets/releases/1.jpg',
+        alt: {
+          pt: '5 Magnésios Skyseed Clinical — detalhe do produto em cápsulas',
+          en: '5 Magnesium Skyseed Clinical — product detail in capsules',
+        },
+      },
+      {
+        src: '/assets/releases/3.jpeg',
+        alt: {
+          pt: '5 Magnésios Skyseed Clinical — composição e informações do rótulo',
+          en: '5 Magnesium Skyseed Clinical — label composition and information',
+        },
+      },
+      {
+        src: '/assets/releases/4.jpeg',
+        alt: {
+          pt: '5 Magnésios Skyseed Clinical — vista adicional do suplemento',
+          en: '5 Magnesium Skyseed Clinical — additional view of the supplement',
+        },
+      },
+    ],
     intro: {
       pt: 'O blend “5 magnésios” da Skyseed nasce da compreensão de que diferentes formas de magnésio possuem funções específicas e, quando combinadas de forma adequada, permitem uma atuação mais completa no organismo.',
       en: 'Skyseed’s “5 magnesium” blend is built on the understanding that different forms of magnesium have specific roles and, when combined appropriately, support a more complete action in the body.',
@@ -110,11 +139,13 @@ export const PRODUCT_RELEASES: ProductRelease[] = [
         id: 'shopee',
         name: { pt: 'Shopee', en: 'Shopee' },
         logo: '/assets/releases/shopee.png',
+        url: 'https://shopee.com.br/product/816049014/22599507364/',
       },
       {
         id: 'mercado-livre',
         name: { pt: 'Mercado Livre', en: 'Mercado Livre' },
         logo: '/assets/releases/mercado-livre.png',
+        url: 'https://www.mercadolivre.com.br/5-magnesios-60-capsulas-500mg--skyseed-clinical/up/MLBU4112406850',
       },
     ],
   },

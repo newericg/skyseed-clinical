@@ -1,25 +1,99 @@
 <article class="product-release">
   <div class="product-release-visual">
-    <button
-      type="button"
-      class="product-release-image-btn"
-      (click)="openImageModal()"
-      [attr.aria-label]="expandImageLabel"
-    >
-      <img
-        [src]="product.image"
-        [alt]="product.imageAlt[lang]"
-        loading="lazy"
-        width="640"
-        height="640"
-      />
-      <span class="product-release-zoom-hint" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="11" cy="11" r="7" />
-          <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" stroke-linecap="round" />
-        </svg>
-      </span>
-    </button>
+    <div class="product-release-gallery" role="region" [attr.aria-label]="galleryLabel">
+      <button
+        type="button"
+        class="product-release-image-btn"
+        (click)="openImageModal()"
+        [attr.aria-label]="expandImageLabel"
+      >
+        <img
+          [src]="activeImage().src"
+          [alt]="activeImage().alt[lang]"
+          [class.is-transitioning]="imageTransitioning()"
+          loading="eager"
+          fetchpriority="high"
+          width="640"
+          height="640"
+        />
+        <span class="product-release-zoom-hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" stroke-linecap="round" />
+          </svg>
+        </span>
+      </button>
+
+      @if (product.images.length > 1) {
+        <div
+          class="product-release-thumbs"
+          [class.product-release-thumbs--carousel]="isCarousel()"
+        >
+          @if (isCarousel()) {
+            <button
+              type="button"
+              class="gallery-nav gallery-nav--prev"
+              [disabled]="!canScrollPrev()"
+              (click)="scrollThumbs(-1)"
+              [attr.aria-label]="prevThumbsLabel"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          }
+
+          <div
+            #thumbViewport
+            class="product-release-thumbs-viewport"
+            (touchstart)="onThumbTouchStart($event)"
+            (touchend)="onThumbTouchEnd($event)"
+          >
+            <div
+              class="product-release-thumbs-track"
+              role="list"
+              [style.transform]="isCarousel() ? trackTransform() : null"
+            >
+              @for (image of product.images; track image.src; let i = $index) {
+                <button
+                  type="button"
+                  role="listitem"
+                  class="product-release-thumb"
+                  [class.is-active]="activeIndex() === i"
+                  [attr.aria-current]="activeIndex() === i ? 'true' : null"
+                  [attr.aria-label]="image.alt[lang]"
+                  (mouseenter)="onThumbHover(i)"
+                  (click)="selectImage(i)"
+                >
+                  <img
+                    [src]="image.src"
+                    alt=""
+                    loading="lazy"
+                    width="96"
+                    height="96"
+                    (load)="onThumbImageLoad()"
+                  />
+                </button>
+              }
+            </div>
+          </div>
+
+          @if (isCarousel()) {
+            <button
+              type="button"
+              class="gallery-nav gallery-nav--next"
+              [disabled]="!canScrollNext()"
+              (click)="scrollThumbs(1)"
+              [attr.aria-label]="nextThumbsLabel"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          }
+        </div>
+      }
+    </div>
   </div>
 
   <div class="product-release-details">
@@ -70,32 +144,34 @@
 </article>
 
 @if (imageModalOpen) {
-  <div
-    class="image-modal-backdrop"
-    (click)="closeImageModal()"
-    role="presentation"
-  ></div>
-  <div
-    class="image-modal"
-    role="dialog"
-    aria-modal="true"
-    [attr.aria-label]="product.imageAlt[lang]"
-  >
-    <button
-      type="button"
-      class="image-modal-close"
+  <div #modalRoot class="image-modal-root">
+    <div
+      class="image-modal-backdrop"
       (click)="closeImageModal()"
-      [attr.aria-label]="closeModalLabel"
+      role="presentation"
+    ></div>
+    <div
+      class="image-modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="activeImage().alt[lang]"
     >
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </button>
-    <img
-      [src]="product.image"
-      [alt]="product.imageAlt[lang]"
-      class="image-modal-img"
-      width="2048"
-      height="2048"
-    />
+      <button
+        type="button"
+        class="image-modal-close"
+        (click)="closeImageModal()"
+        [attr.aria-label]="closeModalLabel"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <img
+        [src]="activeImage().src"
+        [alt]="activeImage().alt[lang]"
+        class="image-modal-img"
+        width="2048"
+        height="2048"
+      />
+    </div>
   </div>
 }

@@ -163,8 +163,8 @@ export class HomeComponent implements AfterViewInit {
       scrollRight: pt ? 'Rolar depoimentos para a direita' : 'Scroll testimonials right',
       fiveStars: pt ? '5 de 5 estrelas' : '5 out of 5 stars',
       testi1: pt
-        ? '"Gosto da simplicidade de incluir o suplemento na minha rotina. A embalagem é clara e o processo é descomplicado."'
-        : '"I like how simple it is to include the supplement in my routine. The packaging is clear and the process is straightforward."',
+        ? '"Gosto da simplicidade de incluir o suplemento na minha rotina. A embalagem é clara e o processo é descomplicado e a marca passa confiança."'
+        : '"I like how simple it is to include the supplement in my routine. The packaging is clear and the process is straightforward and the brand passes confidence."',
       testi1author: pt ? 'A. M. — Cliente' : 'A. M. — Customer',
       testi2: pt
         ? '"A transparência sobre os ingredientes me passou confiança desde o primeiro contato com a marca."'

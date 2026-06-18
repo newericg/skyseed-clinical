@@ -52,7 +52,7 @@ export class LancamentosComponent {
       subtitle: pt
         ? 'Fórmulas desenvolvidas com critério, qualidade e transparência — em breve disponíveis para você.'
         : 'Formulas developed with care, quality, and transparency — coming soon for you.',
-      buyNow: pt ? 'Compre agora' : 'Buy now',
+      buyNow: pt ? 'COMPRE AGORA (Clique no link abaixo)' : 'BUY NOW (Click the link below)',
     };
   }
 }

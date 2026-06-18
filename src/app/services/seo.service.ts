@@ -64,9 +64,7 @@ export class SeoService {
     const pt = lang === 'pt';
     this.setPageSeo(
       {
-        title: pt
-          ? 'Skyseed Clinical | Suplementos para bem-estar e qualidade de vida'
-          : 'Skyseed Clinical | Supplements for well-being and quality of life',
+        title: 'Skyseed Clinical',
         description: pt
           ? 'Na Skyseed Clinical, desenvolvemos suplementos com foco em qualidade, segurança e bem-estar no dia a dia. Conheça nossa abordagem e conteúdos sobre magnésio, sono e microbioma intestinal.'
           : 'At Skyseed Clinical, we develop supplements focused on quality, safety, and daily well-being. Discover our approach and content on magnesium, sleep, and gut microbiome.',

@@ -80,30 +80,6 @@
   }
 }
 
-.social-links {
-  display: flex;
-  gap: 10px;
-}
-
-.social-link {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  text-decoration: none;
-  color: var(--dark);
-  font-size: 14px;
-  transition: background 0.2s, border-color 0.2s;
-
-  &:hover {
-    background: rgba(10, 51, 88, 0.05);
-    border-color: var(--dark);
-  }
-}
-
 @include bp.tablet-down {
   .contato-layout {
     grid-template-columns: 1fr;

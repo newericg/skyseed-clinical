@@ -1,6 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { DEFAULT_OG_IMAGE, SITE_EMAIL, SITE_NAME, SITE_URL } from '../config/site.config';
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_EMAIL,
+  SITE_NAME,
+  SITE_PHONE,
+  SITE_URL,
+  WHATSAPP_NUMBER,
+} from '../config/site.config';
 import { BlogArticleMeta } from '../data/blog-articles-meta';
 
 export interface BreadcrumbItem {
@@ -35,6 +42,7 @@ export class StructuredDataService {
       url: SITE_URL,
       logo: DEFAULT_OG_IMAGE,
       email: SITE_EMAIL,
+      telephone: WHATSAPP_NUMBER ? `+${WHATSAPP_NUMBER}` : SITE_PHONE,
     };
   }
 

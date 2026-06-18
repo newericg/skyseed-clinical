@@ -1,5 +1,13 @@
 import { Component, effect, inject } from '@angular/core';
 import { ContactFormComponent } from '../../components/contact-form/contact-form';
+import {
+  buildWhatsAppUrl,
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_URL,
+  SITE_EMAIL,
+  SITE_PHONE,
+  WHATSAPP_NUMBER,
+} from '../../config/site.config';
 import { LanguageService } from '../../services/language.service';
 import { SeoService } from '../../services/seo.service';
 import { StructuredDataService } from '../../services/structured-data.service';
@@ -14,6 +22,7 @@ export class ContatoComponent {
   private seo = inject(SeoService);
   private structuredData = inject(StructuredDataService);
   langService = inject(LanguageService);
+  readonly whatsappUrl = buildWhatsAppUrl(WHATSAPP_NUMBER);
 
   get lang() {
     return this.langService.lang();
@@ -46,8 +55,10 @@ export class ContatoComponent {
       whatsapp: 'WhatsApp',
       emailLabel: 'E-mail',
       social: pt ? 'Redes sociais' : 'Social media',
-      whatsappSoon: pt ? 'Em breve' : 'Coming soon',
-      emailValue: 'contato@skyseed.com.br',
+      whatsappValue: SITE_PHONE,
+      emailValue: SITE_EMAIL,
+      instagramUrl: INSTAGRAM_URL,
+      instagramHandle: INSTAGRAM_HANDLE,
     };
   }
 }

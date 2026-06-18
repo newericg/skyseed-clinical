@@ -14,7 +14,16 @@
 
         <div class="info-block">
           <p class="info-label">{{ t.whatsapp }}</p>
-          <p class="info-value muted">{{ t.whatsappSoon }}</p>
+          @if (whatsappUrl) {
+            <a
+              class="info-value link"
+              [href]="whatsappUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ t.whatsappValue }}</a>
+          } @else {
+            <p class="info-value">{{ t.whatsappValue }}</p>
+          }
         </div>
 
         <div class="info-block">
@@ -24,12 +33,12 @@
 
         <div class="info-block">
           <p class="info-label">{{ t.social }}</p>
-          <div class="social-links" [attr.aria-label]="t.social">
-            <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="X (Twitter)">𝕏</span>
-            <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="LinkedIn">in</span>
-            <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="YouTube">▶</span>
-            <span class="social-link" role="link" aria-disabled="true" tabindex="-1" aria-label="Instagram">◉</span>
-          </div>
+          <a
+            class="info-value link"
+            [href]="t.instagramUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ t.instagramHandle }}</a>
         </div>
       </aside>
     </div>
