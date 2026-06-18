@@ -7,15 +7,18 @@
         (click)="openImageModal()"
         [attr.aria-label]="expandImageLabel"
       >
-        <img
-          [src]="activeImage().src"
-          [alt]="activeImage().alt[lang]"
-          [class.is-transitioning]="imageTransitioning()"
-          loading="eager"
-          fetchpriority="high"
-          width="640"
-          height="640"
-        />
+        <picture>
+          <source [attr.srcset]="webpSrc(activeImage().src)" type="image/webp" />
+          <img
+            [src]="activeImage().src"
+            [alt]="activeImage().alt[lang]"
+            [class.is-transitioning]="imageTransitioning()"
+            loading="eager"
+            fetchpriority="high"
+            width="640"
+            height="640"
+          />
+        </picture>
         <span class="product-release-zoom-hint" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
             <circle cx="11" cy="11" r="7" />
@@ -65,14 +68,17 @@
                   (mouseenter)="onThumbHover(i)"
                   (click)="selectImage(i)"
                 >
-                  <img
-                    [src]="image.src"
-                    alt=""
-                    loading="lazy"
-                    width="96"
-                    height="96"
-                    (load)="onThumbImageLoad()"
-                  />
+                  <picture>
+                    <source [attr.srcset]="webpSrc(image.src)" type="image/webp" />
+                    <img
+                      [src]="image.src"
+                      alt=""
+                      loading="lazy"
+                      width="96"
+                      height="96"
+                      (load)="onThumbImageLoad()"
+                    />
+                  </picture>
                 </button>
               }
             </div>
@@ -130,11 +136,17 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+              <picture>
+                <source [attr.srcset]="webpSrc(store.logo)" type="image/webp" />
+                <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+              </picture>
             </a>
           } @else {
             <span class="store-link store-link--pending" [attr.aria-label]="store.name[lang]">
-              <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+              <picture>
+                <source [attr.srcset]="webpSrc(store.logo)" type="image/webp" />
+                <img [src]="store.logo" [alt]="store.name[lang]" loading="lazy" width="160" height="56" />
+              </picture>
             </span>
           }
         }
@@ -165,13 +177,16 @@
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </button>
-      <img
-        [src]="activeImage().src"
-        [alt]="activeImage().alt[lang]"
-        class="image-modal-img"
-        width="2048"
-        height="2048"
-      />
+      <picture>
+        <source [attr.srcset]="webpSrc(activeImage().src)" type="image/webp" />
+        <img
+          [src]="activeImage().src"
+          [alt]="activeImage().alt[lang]"
+          class="image-modal-img"
+          width="1024"
+          height="1024"
+        />
+      </picture>
     </div>
   </div>
 }

@@ -44,6 +44,12 @@ const targets = [
   { file: 'assets/blogs/microbioma-web.jpeg', maxWidth: 960, quality: 76 },
   { file: 'assets/blogs/microbioma-mobile.jpeg', maxWidth: 640, quality: 76 },
   { file: 'bg-sky.png', maxWidth: 1920, quality: 80 },
+  { file: 'assets/releases/1.jpg', maxWidth: 1024, quality: 78 },
+  { file: 'assets/releases/magnesium.jpeg', maxWidth: 1024, quality: 78 },
+  { file: 'assets/releases/3.jpeg', maxWidth: 1024, quality: 78 },
+  { file: 'assets/releases/4.jpeg', maxWidth: 1024, quality: 78 },
+  { file: 'assets/releases/shopee.png', maxWidth: 360, quality: 85 },
+  { file: 'assets/releases/mercado-livre.png', maxWidth: 360, quality: 85 },
 ];
 
 for (const target of targets) {

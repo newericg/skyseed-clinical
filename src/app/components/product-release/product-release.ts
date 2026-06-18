@@ -21,7 +21,6 @@ import { LanguageService } from '../../services/language.service';
 const CAROUSEL_THRESHOLD = 3;
 const THUMB_GAP_PX = 10;
 const DESKTOP_VISIBLE = 3;
-const TABLET_VISIBLE = 2;
 const TABLET_BREAKPOINT = 900;
 const MOBILE_VISIBLE = 2;
 
@@ -75,6 +74,8 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
 
   private transitionTimer: ReturnType<typeof setTimeout> | null = null;
   private resizeObserver: ResizeObserver | null = null;
+  private resizeFrame: number | null = null;
+  private lastMeasuredThumbWidth = 0;
   private touchStartX = 0;
 
   private readonly preloadEffect = effect(() => {
@@ -87,7 +88,7 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
       const target = index + offset;
       if (target >= 0 && target < images.length) {
         const img = new Image();
-        img.src = images[target].src;
+        img.src = this.webpSrc(images[target].src);
       }
     }
   });
@@ -116,21 +117,27 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
     return this.lang === 'pt' ? 'Próximas miniaturas' : 'Next thumbnails';
   }
 
+  webpSrc(src: string) {
+    return src.replace(/\.(jpe?g|png)$/i, '.webp');
+  }
+
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const viewport = this.thumbViewport()?.nativeElement;
     if (!viewport) return;
 
-    this.updateLayout();
+    this.scheduleLayoutUpdate();
 
-    this.resizeObserver = new ResizeObserver(() => this.updateLayout());
+    this.resizeObserver = new ResizeObserver(() => this.scheduleLayoutUpdate());
     this.resizeObserver.observe(viewport);
   }
 
   ngOnDestroy() {
     if (this.transitionTimer) clearTimeout(this.transitionTimer);
+    if (this.resizeFrame) cancelAnimationFrame(this.resizeFrame);
     this.resizeObserver?.disconnect();
+    this.detachModalFromBody();
 
     if (this.imageModalOpen && isPlatformBrowser(this.platformId)) {
       this.document.body.style.overflow = '';
@@ -173,12 +180,12 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
   }
 
   onThumbImageLoad() {
-    this.updateLayout();
+    this.scheduleLayoutUpdate();
   }
 
   @HostListener('window:resize')
   onResize() {
-    this.updateLayout();
+    this.scheduleLayoutUpdate();
   }
 
   @HostListener('keydown', ['$event'])
@@ -227,6 +234,13 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private detachModalFromBody() {
+    const root = this.modalRoot()?.nativeElement;
+    if (root?.parentElement === this.document.body) {
+      root.remove();
+    }
+  }
+
   private previewImage(index: number) {
     if (index === this.activeIndex()) return;
 
@@ -254,26 +268,52 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private scheduleLayoutUpdate() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.resizeFrame) cancelAnimationFrame(this.resizeFrame);
+    this.resizeFrame = requestAnimationFrame(() => {
+      this.resizeFrame = null;
+      this.updateLayout();
+    });
+  }
+
   private updateLayout() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    this.visibleCount.set(this.getVisibleCount());
+    const nextVisible = this.getVisibleCount();
+    if (nextVisible !== this.visibleCount()) {
+      this.visibleCount.set(nextVisible);
+      this.lastMeasuredThumbWidth = 0;
+    }
 
     const viewport = this.thumbViewport()?.nativeElement;
     if (!viewport) return;
 
-    const visible = this.visibleCount();
-    const thumbWidth = this.getThumbWidth(viewport);
-
-    this.thumbWidthPx.set(thumbWidth);
-    if (thumbWidth > 0) {
-      viewport.style.setProperty('--thumb-width', `${thumbWidth}px`);
+    const thumbWidth = this.measureThumbWidth(viewport);
+    if (
+      thumbWidth > 0 &&
+      Math.abs(thumbWidth - this.lastMeasuredThumbWidth) >= 0.5
+    ) {
+      this.lastMeasuredThumbWidth = thumbWidth;
+      this.thumbWidthPx.set(thumbWidth);
     }
 
+    const visible = this.visibleCount();
     const maxOffset = Math.max(0, this.product.images.length - visible);
     if (this.carouselOffset() > maxOffset) {
       this.carouselOffset.set(maxOffset);
     }
+  }
+
+  private measureThumbWidth(viewport: HTMLElement) {
+    const thumb = viewport.querySelector<HTMLElement>('.product-release-thumb');
+    if (thumb) {
+      return thumb.getBoundingClientRect().width;
+    }
+
+    const visible = this.visibleCount();
+    if (visible <= 0) return 0;
+    return (viewport.clientWidth - THUMB_GAP_PX * (visible - 1)) / visible;
   }
 
   private getVisibleCount() {
@@ -282,11 +322,5 @@ export class ProductReleaseComponent implements AfterViewInit, OnDestroy {
     const width = window.innerWidth;
     if (width <= TABLET_BREAKPOINT) return MOBILE_VISIBLE;
     return DESKTOP_VISIBLE;
-  }
-
-  private getThumbWidth(viewport: HTMLElement) {
-    const visible = this.visibleCount();
-    if (visible <= 0) return 0;
-    return (viewport.clientWidth - THUMB_GAP_PX * (visible - 1)) / visible;
   }
 }

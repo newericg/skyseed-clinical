@@ -53,17 +53,17 @@ export const PRODUCT_RELEASES: ProductRelease[] = [
     name: { pt: '5 Magnésios', en: '5 Magnesium' },
     images: [
       {
-        src: '/assets/releases/magnesium.jpeg',
+        src: '/assets/releases/1.jpg',
         alt: {
           pt: '5 Magnésios Skyseed Clinical — embalagem frontal do suplemento',
           en: '5 Magnesium Skyseed Clinical — front packaging of the supplement',
         },
       },
       {
-        src: '/assets/releases/1.jpg',
+        src: '/assets/releases/magnesium.jpeg',
         alt: {
-          pt: '5 Magnésios Skyseed Clinical — detalhe do produto em cápsulas',
-          en: '5 Magnesium Skyseed Clinical — product detail in capsules',
+          pt: '5 Magnésios Skyseed Clinical — informações nutricionais e composição',
+          en: '5 Magnesium Skyseed Clinical — nutritional information and composition',
         },
       },
       {
